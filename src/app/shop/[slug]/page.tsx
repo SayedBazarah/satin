@@ -1,0 +1,18 @@
+// ----------------------------------------------------------------------
+
+import { ShopView } from 'src/sections/shop/view';
+import { ShopProductDetailsView } from 'src/sections/shop/view';
+import axios, { endpoints } from 'src/utils/axios';
+
+export const metadata = {
+  title: 'Details',
+};
+
+export default function Page({ params }: { params: { slug: string } }) {
+  return <ShopProductDetailsView slug={params.slug} />;
+}
+
+export async function generateStaticParams() {
+  const res = await axios.get(endpoints.product.slugs);
+  return res.data.slugs;
+}
