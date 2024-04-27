@@ -45,13 +45,6 @@ export default function ProductShopView() {
     value: string;
     label: string;
   }[] = [];
-  const PRODUCT_COLOR_OPTIONS: string[] = [];
-  const PRODUCT_GENDER_OPTIONS: {
-    value: string;
-    label: string;
-  }[] = [];
-  const PRODUCT_RATING_OPTIONS: string[] = [];
-  const PRODUCT_CATEGORY_OPTIONS: string[] = [];
 
   const settings = useSettingsContext();
 
@@ -126,11 +119,7 @@ export default function ProductShopView() {
           //
           canReset={canReset}
           onResetFilters={handleResetFilters}
-          //
-          colorOptions={PRODUCT_COLOR_OPTIONS}
-          ratingOptions={PRODUCT_RATING_OPTIONS}
-          genderOptions={PRODUCT_GENDER_OPTIONS}
-          categoryOptions={['all', ...PRODUCT_CATEGORY_OPTIONS]}
+          ratingOptions={[]}
         />
 
         <ProductSort sort={sortBy} onSort={handleSortBy} sortOptions={PRODUCT_SORT_OPTIONS} />

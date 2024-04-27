@@ -8,8 +8,7 @@ import Typography from '@mui/material/Typography';
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
-import { useTranslate } from 'src/locales';
-import { ExpiredIcon } from 'src/assets/icons';
+// import { ExpiredIcon } from 'src/assets/icons';
 
 import Iconify from 'src/components/iconify';
 
@@ -18,11 +17,12 @@ import Iconify from 'src/components/iconify';
 export default function TokenExpiredView() {
   const theme = useTheme();
 
-  const { t } = useTranslate();
+  // const { t } = useTranslate();
+  const t = (tx: string) => tx;
 
   return (
     <Box sx={{ p: 4, boxShadow: theme.shadows[6], borderRadius: 2 }}>
-      <ExpiredIcon sx={{ height: 96 }} />
+      {/* <ExpiredIcon sx={{ height: 96 }} /> */}
 
       <Stack spacing={1} alignItems="center">
         <Typography variant="h3"> {t('auth.token_expired')}</Typography>

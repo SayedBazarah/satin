@@ -30,11 +30,12 @@ import ProductFiltersResult from '../product-filters-result';
 
 // ----------------------------------------------------------------------
 const defaultFilters: IProductFilters = {
-  gender: [],
-  colors: [],
   rating: '',
   category: 'all',
   priceRange: [0, 200],
+  gender: [],
+  tag: '',
+  colors: [],
 };
 
 // ----------------------------------------------------------------------
@@ -44,13 +45,8 @@ export default function ProductShopView() {
     value: string;
     label: string;
   }[] = [];
-  const PRODUCT_COLOR_OPTIONS: string[] = [];
-  const PRODUCT_GENDER_OPTIONS: {
-    value: string;
-    label: string;
-  }[] = [];
+
   const PRODUCT_RATING_OPTIONS: string[] = [];
-  const PRODUCT_CATEGORY_OPTIONS: string[] = [];
 
   const settings = useSettingsContext();
 
@@ -126,10 +122,7 @@ export default function ProductShopView() {
           canReset={canReset}
           onResetFilters={handleResetFilters}
           //
-          colorOptions={PRODUCT_COLOR_OPTIONS}
           ratingOptions={PRODUCT_RATING_OPTIONS}
-          genderOptions={PRODUCT_GENDER_OPTIONS}
-          categoryOptions={['all', ...PRODUCT_CATEGORY_OPTIONS]}
         />
 
         <ProductSort sort={sortBy} onSort={handleSortBy} sortOptions={PRODUCT_SORT_OPTIONS} />
