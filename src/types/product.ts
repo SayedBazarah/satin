@@ -6,6 +6,7 @@ export type IProductFilters = {
   rating: string;
   gender: string[];
   category: string;
+  tag: string;
   colors: string[];
   priceRange: number[];
 };
@@ -31,8 +32,16 @@ export type IProductReview = {
   postedAt: Date;
 };
 
+export type ICategory = {
+  _id: string;
+  title: string;
+  slug: string;
+  coverImage: string;
+  products: IProductItem[];
+};
 export type IProductItem = {
   id: string;
+  _id: string;
   sku: string;
   name: string;
   slug: string;
@@ -40,6 +49,7 @@ export type IProductItem = {
   price: number;
   taxes: number;
   tags: string[];
+  Category: ICategory | null;
   gender: string;
   sizes: string[];
   publish: string;

@@ -1,11 +1,21 @@
 import React, { useEffect } from 'react';
+import { m as motion } from 'framer-motion';
+
 import { Box, Grid, Paper, Stack, Typography } from '@mui/material';
-import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
+
+import { RouterLink } from 'src/routes/components';
+
 import Label from 'src/components/label';
 import Image from 'src/components/image';
 import Carousel, { useCarousel } from 'src/components/carousel';
 
-export default function HeroCarousel() {
+import { IProductItem } from 'src/types/product';
+
+type Props = {
+  products: IProductItem[];
+};
+
+export default function HeroCarousel({ products }: Props) {
   const carouselLarge = useCarousel({
     rtl: false,
     autoplay: true, // Enable auto-scroll
@@ -16,6 +26,7 @@ export default function HeroCarousel() {
   useEffect(() => {
     carouselLarge.onSetNav();
   }, [carouselLarge]);
+
   return (
     <motion.div
       initial={{ x: '-100vw' }} // Start position (off-screen to the right)
@@ -23,54 +34,60 @@ export default function HeroCarousel() {
       transition={{ type: 'tween', stiffness: 50, duration: 1 }} // Animation transition
     >
       <Carousel {...carouselLarge.carouselSettings} ref={carouselLarge.carouselRef}>
-        <SliderItem />
-        <SliderItem />
-        <SliderItem />
+        {products.map((product, index) => (
+          <SliderItem key={index} product={product} />
+        ))}
       </Carousel>
     </motion.div>
   );
 }
 
-const SliderItem = () => (
-  <Grid container spacing={2} px="10px">
-    <Grid item xs={6}>
-      <Paper>
-        <Stack height={400} justifyContent="space-between">
-          <Box mb={3}>
-            <Label variant="filled">NEW PRODUCT</Label>
-            <Typography fontWeight={700} fontSize={26}>
-              Top quality seafood from Royal Blue
-            </Typography>
-          </Box>
-          <Typography variant="caption" color="primary.main">
-            Category: Seafood
-          </Typography>
-          <Typography variant="button" fontWeight={700}>
-            Royal Blue Medium Shrimp
-          </Typography>
-          <Image
-            src="http://localhost:3000/media/images/resourses/hero.jpg"
-            sx={{
-              width: '100%',
-              height: '100%',
-              borderRadius: '8px',
-              cursor: 'pointer',
-            }}
-          />
-        </Stack>
-      </Paper>
-    </Grid>
-    <Grid item xs={6}>
-      <Paper>
-        <Image
-          src="http://localhost:3000/media/images/resourses/cover.jpg"
-          sx={{
-            height: '400px',
-            width: '100%',
-            borderRadius: '8px',
-          }}
-        />
-      </Paper>
-    </Grid>
-  </Grid>
-);
+const SliderItem = ({ product }: { product: IProductItem }) => {
+  console.log('product');
+  console.log(product.category);
+  return (
+    <Box component={RouterLink} href={`/shop/${product.slug}`} sx={{ textDecoration: 'none' }}>
+      <Grid container spacing={2} px="10px">
+        <Grid item xs={6}>
+          <Paper>
+            <Stack height={400} justifyContent="space-between">
+              <Box mb={3}>
+                <Label variant="filled">{product.saleLabel && product.saleLabel.content}</Label>
+                <Typography fontWeight={700} fontSize={26}>
+                  {product.name}
+                </Typography>
+              </Box>
+              <Typography variant="caption" color="primary.main">
+                Category:
+              </Typography>
+              <Typography variant="button" fontWeight={700}>
+                {product.description}
+              </Typography>
+              <Image
+                src={product.coverUrl}
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                }}
+              />
+            </Stack>
+          </Paper>
+        </Grid>
+        <Grid item xs={6}>
+          <Paper>
+            <Image
+              src={product.coverUrl}
+              sx={{
+                height: '400px',
+                width: '100%',
+                borderRadius: '8px',
+              }}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};

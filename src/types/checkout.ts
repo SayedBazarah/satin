@@ -8,8 +8,7 @@ export type ICheckoutItem = {
   coverUrl: string;
   available: number;
   price: number;
-  colors: string[];
-  size: string;
+  priceSale: number;
   quantity: number;
   subTotal: number;
 };
@@ -44,6 +43,7 @@ export type ICheckoutValue = {
 
 export type CheckoutContextProps = ICheckoutValue & {
   completed: boolean;
+  onComplete: VoidFunction;
   //
   onAddToCart: (newItem: Omit<ICheckoutItem, 'subTotal'>) => void;
   onDeleteCart: (itemId: string) => void;

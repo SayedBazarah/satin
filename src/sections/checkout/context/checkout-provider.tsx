@@ -1,6 +1,5 @@
 'use client';
 
-import uniq from 'lodash/uniq';
 import { useMemo, useEffect, useCallback } from 'react';
 
 import { paths } from 'src/routes/paths';
@@ -10,7 +9,8 @@ import { getStorage, useLocalStorage } from 'src/hooks/use-local-storage';
 
 // import { [] } from 'src/_mock/_product';
 
-import { IAddressItem } from 'src/types/address';
+import { useBoolean } from 'src/hooks/use-boolean';
+
 import { ICheckoutItem } from 'src/types/checkout';
 
 import { CheckoutContext } from './checkout-context';
@@ -50,10 +50,16 @@ export function CheckoutProvider({ children }: Props) {
       0
     );
 
+    const totalProductsDiscount: number = state.items.reduce(
+      (total: number, item: ICheckoutItem) =>
+        item.priceSale && (item.price - item.priceSale) * item.quantity,
+      0
+    );
+    console.log(totalProductsDiscount);
     update('subTotal', subTotal);
     update('totalItems', totalItems);
     update('billing', state.activeStep === 1 ? null : state.billing);
-    update('discount', state.items.length ? state.discount : 0);
+    update('discount', state.items.length ? totalProductsDiscount : 0);
     update('shipping', state.items.length ? state.shipping : 0);
     update('total', state.subTotal - state.discount + state.shipping);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -80,7 +86,6 @@ export function CheckoutProvider({ children }: Props) {
         if (item.id === newItem.id) {
           return {
             ...item,
-            colors: uniq([...item.colors, ...newItem.colors]),
             quantity: item.quantity + 1,
           };
         }
@@ -154,21 +159,21 @@ export function CheckoutProvider({ children }: Props) {
     [update, state.items]
   );
 
-  const onCreateBilling = useCallback(
-    (address: IAddressItem) => {
-      update('billing', address);
+  // const onCreateBilling = useCallback(
+  //   (address: IAddressItem) => {
+  //     update('billing', address);
 
-      onNextStep();
-    },
-    [onNextStep, update]
-  );
+  //     onNextStep();
+  //   },
+  //   [onNextStep, update]
+  // );
 
-  const onApplyDiscount = useCallback(
-    (discount: number) => {
-      update('discount', discount);
-    },
-    [update]
-  );
+  // const onApplyDiscount = useCallback(
+  //   (discount: number) => {
+  //     update('discount', discount);
+  //   },
+  //   [update]
+  // );
 
   const onApplyShipping = useCallback(
     (shipping: number) => {
@@ -177,12 +182,14 @@ export function CheckoutProvider({ children }: Props) {
     [update]
   );
 
-  const completed = state.activeStep === [].length;
+  const completed = useBoolean(false);
+  // const completed = state.activeStep;
 
   // Reset
   const onReset = useCallback(() => {
     if (completed) {
       reset();
+      completed.onFalse();
       router.replace(paths.product.root);
     }
   }, [completed, reset, router]);
@@ -190,16 +197,15 @@ export function CheckoutProvider({ children }: Props) {
   const memoizedValue = useMemo(
     () => ({
       ...state,
-      completed,
+      completed: completed.value,
+      onComplete: completed.onTrue,
       //
       onAddToCart,
       onDeleteCart,
       //
-      onIncreaseQuantity,
       onDecreaseQuantity,
+      onIncreaseQuantity,
       //
-      onCreateBilling,
-      onApplyDiscount,
       onApplyShipping,
       //
       onBackStep,
@@ -211,14 +217,12 @@ export function CheckoutProvider({ children }: Props) {
     [
       completed,
       onAddToCart,
-      onApplyDiscount,
       onApplyShipping,
       onBackStep,
-      onCreateBilling,
       onDecreaseQuantity,
+      onIncreaseQuantity,
       onDeleteCart,
       onGotoStep,
-      onIncreaseQuantity,
       onNextStep,
       onReset,
       state,

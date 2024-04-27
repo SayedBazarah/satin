@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Radio from '@mui/material/Radio';
 import Stack from '@mui/material/Stack';
@@ -10,17 +10,17 @@ import Slider from '@mui/material/Slider';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
-import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputBase, { inputBaseClasses } from '@mui/material/InputBase';
 
+import axios, { endpoints } from 'src/utils/axios';
+
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
-import { ColorPicker } from 'src/components/color-utils';
 
-import { IProductFilters, IProductFilterValue } from 'src/types/product';
+import { ICategory, IProductFilters, IProductFilterValue } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 
@@ -35,14 +35,17 @@ type Props = {
   canReset: boolean;
   onResetFilters: VoidFunction;
   //
-  genderOptions: {
-    value: string;
-    label: string;
-  }[];
-  categoryOptions: string[];
   ratingOptions: string[];
-  colorOptions: string[];
 };
+
+// ------------------------------------
+
+const filterOptionsDefault: { tags: string[]; categories: ICategory[] } = {
+  tags: [],
+  categories: [],
+};
+
+// ------------------------------------
 
 export default function ProductFilters({
   open,
@@ -55,13 +58,24 @@ export default function ProductFilters({
   canReset,
   onResetFilters,
   //
-  colorOptions,
-  genderOptions,
   ratingOptions,
-  categoryOptions,
 }: Props) {
+  const [filterOptions, setFilterOptions] = useState(filterOptionsDefault);
+  // ------------------------------------
+  useEffect(() => {
+    (async () => {
+      const { data } = await axios.get(endpoints.product.categories_tags);
+      if (data)
+        setFilterOptions({
+          categories: data.categories as unknown as ICategory[],
+          tags: data.tags as unknown as string[],
+        });
+    })();
+  }, []);
+  // ------------------------------------
+
   const marksLabel = [...Array(21)].map((_, index) => {
-    const value = index * 10;
+    const value = index * 100;
 
     const firstValue = index === 0 ? `$${value}` : `${value}`;
 
@@ -71,16 +85,6 @@ export default function ProductFilters({
     };
   });
 
-  const handleFilterGender = useCallback(
-    (newValue: string) => {
-      const checked = filters.gender.includes(newValue)
-        ? filters.gender.filter((value) => value !== newValue)
-        : [...filters.gender, newValue];
-      onFilters('gender', checked);
-    },
-    [filters.gender, onFilters]
-  );
-
   const handleFilterCategory = useCallback(
     (newValue: string) => {
       onFilters('category', newValue);
@@ -88,9 +92,9 @@ export default function ProductFilters({
     [onFilters]
   );
 
-  const handleFilterColors = useCallback(
-    (newValue: string | string[]) => {
-      onFilters('colors', newValue);
+  const handleFilterTag = useCallback(
+    (newValue: string) => {
+      onFilters('tag', newValue);
     },
     [onFilters]
   );
@@ -134,39 +138,41 @@ export default function ProductFilters({
     </Stack>
   );
 
-  const renderGender = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>
-        Gender
-      </Typography>
-      {genderOptions.map((option) => (
-        <FormControlLabel
-          key={option.value}
-          control={
-            <Checkbox
-              checked={filters.gender.includes(option.label)}
-              onClick={() => handleFilterGender(option.label)}
-            />
-          }
-          label={option.label}
-        />
-      ))}
-    </Stack>
-  );
-
   const renderCategory = (
     <Stack>
       <Typography variant="subtitle2" sx={{ mb: 1 }}>
         Category
       </Typography>
-      {categoryOptions.map((option) => (
+      {filterOptions.categories.map((option) => (
+        <FormControlLabel
+          key={option._id}
+          control={
+            <Radio
+              checked={option._id === filters.category}
+              onClick={() => handleFilterCategory(option._id)}
+            />
+          }
+          label={option.title}
+          sx={{
+            ...(option.title === 'all' && {
+              textTransform: 'capitalize',
+            }),
+          }}
+        />
+      ))}
+    </Stack>
+  );
+
+  const renderTags = (
+    <Stack>
+      <Typography variant="subtitle2" sx={{ mb: 1 }}>
+        Tag
+      </Typography>
+      {filterOptions.tags.map((option) => (
         <FormControlLabel
           key={option}
           control={
-            <Radio
-              checked={option === filters.category}
-              onClick={() => handleFilterCategory(option)}
-            />
+            <Radio checked={option === filters.tag} onClick={() => handleFilterTag(option)} />
           }
           label={option}
           sx={{
@@ -176,20 +182,6 @@ export default function ProductFilters({
           }}
         />
       ))}
-    </Stack>
-  );
-
-  const renderColor = (
-    <Stack>
-      <Typography variant="subtitle2" sx={{ mb: 1 }}>
-        Color
-      </Typography>
-      <ColorPicker
-        selected={filters.colors}
-        onSelectColor={(colors) => handleFilterColors(colors)}
-        colors={colorOptions}
-        limit={6}
-      />
     </Stack>
   );
 
@@ -207,9 +199,9 @@ export default function ProductFilters({
       <Slider
         value={filters.priceRange}
         onChange={handleFilterPriceRange}
-        step={10}
+        step={5}
         min={0}
-        max={200}
+        max={2000}
         marks={marksLabel}
         getAriaValueText={(value) => `$${value}`}
         valueLabelFormat={(value) => `$${value}`}
@@ -281,14 +273,9 @@ export default function ProductFilters({
 
         <Scrollbar sx={{ px: 2.5, py: 3 }}>
           <Stack spacing={3}>
-            {renderGender}
-
             {renderCategory}
-
-            {renderColor}
-
+            {renderTags}
             {renderPrice}
-
             {renderRating}
           </Stack>
         </Scrollbar>

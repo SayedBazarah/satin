@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
-import { IProductItem } from 'src/types/product';
+import { ICategory, IProductItem } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,6 @@ export function useGetProducts() {
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
-  console.log(data);
   const memoizedValue = useMemo(
     () => ({
       products: (data?.products as IProductItem[]) || [],
@@ -31,7 +30,6 @@ export function useGetProducts() {
 
 export function useGetProduct(slug: string) {
   const { data, isLoading, error, isValidating } = useSWR(endpoints.product.details(slug), fetcher);
-
   const memoizedValue = useMemo(
     () => ({
       product: data?.product as IProductItem,
@@ -47,22 +45,84 @@ export function useGetProduct(slug: string) {
 
 // ----------------------------------------------------------------------
 
-export function useSearchProducts(query: string) {
-  const URL = query ? [endpoints.product.search, { params: { query } }] : '';
-
-  const { data, isLoading, error, isValidating } = useSWR(URL, fetcher, {
-    keepPreviousData: true,
-  });
+export function useGetCategories() {
+  const { data, isLoading, error, isValidating } = useSWR(endpoints.category.list, fetcher);
 
   const memoizedValue = useMemo(
     () => ({
-      searchResults: (data?.results as IProductItem[]) || [],
+      categories: data?.categories as ICategory[],
+      categoriesLoading: isLoading,
+      categoriesError: error,
+      categoriesValidating: isValidating,
+    }),
+    [data?.categories, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+export function useGetLandingPage() {
+  const { data, isLoading, error, isValidating } = useSWR(endpoints.landing, fetcher);
+  const memoizedValue = useMemo(
+    () => ({
+      categories: (data?.categories as ICategory[]) || [],
+      carsoul: (data?.carsoul as IProductItem[]) || [],
+      trendy: (data?.trendy as IProductItem[]) || [],
+      isLoading,
+      isError: error,
+      isValidating,
+    }),
+    [data?.categories, data?.trendy, data?.carsoul, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+export function useGetCategoryProducts(slug: string) {
+  const { data, isLoading, error, isValidating } = useSWR(
+    endpoints.category.details(slug),
+    fetcher
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      categories: data?.categories as ICategory,
+      categoriesLoading: isLoading,
+      categoriesError: error,
+      categoriesValidating: isValidating,
+      categoriesEmpty: !isLoading && !data?.categories.products.length,
+    }),
+    [data?.categories, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+export function useSearchProducts(query: string) {
+  const { data, isLoading, error, isValidating } = useSWR(
+    endpoints.product.search(query),
+    fetcher,
+    {
+      keepPreviousData: true,
+      refreshInterval: 600000,
+    }
+  );
+
+  const memoizedValue = useMemo(
+    () => ({
+      searchResults: (data?.products as IProductItem[]) || [],
       searchLoading: isLoading,
       searchError: error,
       searchValidating: isValidating,
-      searchEmpty: !isLoading && !data?.results.length,
+      searchEmpty: !isLoading && !data?.products.length,
     }),
-    [data?.results, error, isLoading, isValidating]
+    [data?.products, error, isLoading, isValidating]
   );
 
   return memoizedValue;

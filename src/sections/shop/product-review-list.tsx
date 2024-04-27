@@ -13,9 +13,7 @@ type Props = {
 export default function ProductReviewList({ reviews }: Props) {
   return (
     <>
-      {reviews.map((review) => (
-        <ProductReviewItem key={review.id} review={review} />
-      ))}
+      {reviews && reviews.map((review) => <ProductReviewItem key={review.id} review={review} />)}
 
       <Pagination
         count={10}

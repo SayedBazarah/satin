@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import { alpha, styled, useTheme } from '@mui/material/styles';
 
 import { bgGradient } from 'src/theme/css';
@@ -144,28 +143,25 @@ export default function ProductDetailsCarousel({ product }: Props) {
         ref={carouselThumb.carouselRef}
       >
         {product.images.length > 1 &&
-          slides.map((item, index) => {
-            console.log(item);
-            return (
-              <Box key={item.src} sx={{ px: 0.5 }}>
-                <Image
-                  key={item.src}
-                  alt={item.src}
-                  src={item.src}
-                  sx={{
-                    width: THUMB_SIZE,
-                    height: THUMB_SIZE,
-                    opacity: 0.48,
-                    cursor: 'pointer',
-                    ...(carouselLarge.currentIndex === index && {
-                      opacity: 1,
-                      border: `solid 2.5px ${theme.palette.primary.main}`,
-                    }),
-                  }}
-                />
-              </Box>
-            );
-          })}
+          slides.map((item, index) => (
+            <Box key={item.src} sx={{ px: 0.5 }}>
+              <Image
+                key={index}
+                alt={item.src}
+                src={item.src}
+                sx={{
+                  width: THUMB_SIZE,
+                  height: THUMB_SIZE,
+                  opacity: 0.48,
+                  cursor: 'pointer',
+                  ...(carouselLarge.currentIndex === index && {
+                    opacity: 1,
+                    border: `solid 2.5px ${theme.palette.primary.main}`,
+                  }),
+                }}
+              />
+            </Box>
+          ))}
       </Carousel>
     </StyledThumbnailsContainer>
   );

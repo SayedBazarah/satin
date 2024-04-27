@@ -114,6 +114,7 @@ export default function ProductShopDetailsView({ slug }: Props) {
             items={checkout.items}
             onAddCart={checkout.onAddToCart}
             onGotoStep={checkout.onGotoStep}
+            disabledActions={product.available === 0}
           />
         </Grid>
       </Grid>

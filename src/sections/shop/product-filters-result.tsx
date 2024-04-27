@@ -65,9 +65,9 @@ export default function ProductFiltersResult({
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {!!filters.gender.length && (
           <Block label="Gender:">
-            {filters.gender.map((item) => (
+            {filters.gender.map((item, index) => (
               <Chip
-                key={item}
+                key={index}
                 label={item}
                 size="small"
                 onDelete={() => handleRemoveGender(item)}
@@ -84,9 +84,9 @@ export default function ProductFiltersResult({
 
         {!!filters.colors.length && (
           <Block label="Colors:">
-            {filters.colors.map((item) => (
+            {filters.colors.map((item, index) => (
               <Chip
-                key={item}
+                key={index}
                 size="small"
                 label={
                   <Box

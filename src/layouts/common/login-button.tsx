@@ -1,10 +1,9 @@
 import Button from '@mui/material/Button';
 import { Theme, SxProps } from '@mui/material/styles';
 
+import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
-import { PATH_AFTER_LOGIN } from 'src/config-global';
-import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 

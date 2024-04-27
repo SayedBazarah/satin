@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 
-import { usePathname } from 'src/routes/hooks';
-
 import Footer from './footer';
 import Header from './header';
 
@@ -12,7 +10,7 @@ type Props = {
 };
 
 export default function MainLayout({ children }: Props) {
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   // const homePage = pathname === '/';
   const homePage = false;

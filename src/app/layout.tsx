@@ -11,6 +11,7 @@ import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
+import { CheckoutProvider } from 'src/sections/checkout/context';
 
 // ----------------------------------------------------------------------
 
@@ -56,9 +57,11 @@ export default function RootLayout({ children }: Props) {
           >
             <ThemeProvider>
               <MotionLazy>
-                <SettingsDrawer />
-                <ProgressBar />
-                {children}
+                <CheckoutProvider>
+                  <SettingsDrawer />
+                  <ProgressBar />
+                  {children}
+                </CheckoutProvider>
               </MotionLazy>
             </ThemeProvider>
           </SettingsProvider>

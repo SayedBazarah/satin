@@ -109,7 +109,7 @@ export default function Footer() {
                 mt: 3,
                 mb: { xs: 5, md: 0 },
               }}
-            ></Stack>
+             />
           </Grid>
 
           <Grid xs={12} md={6}>

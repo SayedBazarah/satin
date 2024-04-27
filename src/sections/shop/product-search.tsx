@@ -2,7 +2,6 @@ import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -11,6 +10,7 @@ import Autocomplete, { autocompleteClasses } from '@mui/material/Autocomplete';
 import { useRouter } from 'src/routes/hooks';
 
 import Iconify from 'src/components/iconify';
+import Image from 'src/components/image/image';
 import SearchNotFound from 'src/components/search-not-found';
 
 import { IProductItem } from 'src/types/product';
@@ -21,15 +21,15 @@ type Props = {
   query: string;
   results: IProductItem[];
   onSearch: (inputValue: string) => void;
-  hrefItem: (id: string) => string;
+  hrefItem: (slug: string) => string;
   loading?: boolean;
 };
 
 export default function ProductSearch({ query, results, onSearch, hrefItem, loading }: Props) {
   const router = useRouter();
 
-  const handleClick = (id: string) => {
-    router.push(hrefItem(id));
+  const handleClick = (slug: string) => {
+    router.push(hrefItem(slug));
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -37,7 +37,7 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
       if (event.key === 'Enter') {
         const selectItem = results.filter((product) => product.name === query)[0];
 
-        handleClick(selectItem.id);
+        handleClick(selectItem.slug);
       }
     }
   };
@@ -94,12 +94,17 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
         const parts = parse(product.name, matches);
 
         return (
-          <Box component="li" {...props} onClick={() => handleClick(product.id)} key={product.id}>
-            <Avatar
+          <Box
+            component="li"
+            {...props}
+            onClick={() => handleClick(product.slug)}
+            key={product.slug}
+          >
+            <Box
+              component={Image}
               key={product.id}
               alt={product.name}
               src={product.coverUrl}
-              variant="rounded"
               sx={{
                 width: 48,
                 height: 48,

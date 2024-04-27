@@ -14,7 +14,7 @@ export const paths = {
   contact: `/contact`,
   faqs: `/faqs`,
   shop: `/shop`,
-  tags: `/tags`,
+  categories: `/categories`,
   tag: {
     root: `/tags`,
     single: (id: string) => `/tags/${id}`,

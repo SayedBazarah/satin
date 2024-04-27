@@ -70,37 +70,38 @@ export default function ProductDetailsReview({
         }),
       }}
     >
-      {ratings
-        .slice(0)
-        .reverse()
-        .map((rating) => (
-          <Stack key={rating.name} direction="row" alignItems="center">
-            <Typography variant="subtitle2" component="span" sx={{ width: 42 }}>
-              {rating.name}
-            </Typography>
+      {ratings &&
+        ratings
+          .slice(0)
+          .reverse()
+          .map((rating) => (
+            <Stack key={rating.name} direction="row" alignItems="center">
+              <Typography variant="subtitle2" component="span" sx={{ width: 42 }}>
+                {rating.name}
+              </Typography>
 
-            <LinearProgress
-              color="inherit"
-              variant="determinate"
-              value={(rating.starCount / total) * 100}
-              sx={{
-                mx: 2,
-                flexGrow: 1,
-              }}
-            />
+              <LinearProgress
+                color="inherit"
+                variant="determinate"
+                value={(rating.starCount / total) * 100}
+                sx={{
+                  mx: 2,
+                  flexGrow: 1,
+                }}
+              />
 
-            <Typography
-              variant="body2"
-              component="span"
-              sx={{
-                minWidth: 48,
-                color: 'text.secondary',
-              }}
-            >
-              {fShortenNumber(rating.reviewCount)}
-            </Typography>
-          </Stack>
-        ))}
+              <Typography
+                variant="body2"
+                component="span"
+                sx={{
+                  minWidth: 48,
+                  color: 'text.secondary',
+                }}
+              >
+                {fShortenNumber(rating.reviewCount)}
+              </Typography>
+            </Stack>
+          ))}
     </Stack>
   );
 

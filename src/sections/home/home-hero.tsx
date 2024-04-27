@@ -1,51 +1,37 @@
-import { Box, Button, Grid, Paper, Stack } from '@mui/material';
-import { m as motion, LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, m as motion, domAnimation } from 'framer-motion';
 
-import Image from 'src/components/image';
-import HeroCarousel from './hero-carousel';
+import { Box, Grid, Paper, Stack } from '@mui/material';
+
+import { RouterLink } from 'src/routes/components';
+
 import { useResponsive } from 'src/hooks/use-responsive';
 
-const DATA = {
-  products: [
-    {
-      title: 'Top quality seafood from Royal Blue',
-      label: ['NEW PRODUCT'],
-      category: 'Seafood',
-      name: ' Royal Blue Medium Shrimp',
-      image: 'http://localhost:3000/media/images/resourses/hero.jpg',
-      coverImage: 'http://localhost:3000/media/images/resourses/cover.jpg',
-    },
-  ],
-  tags: [
-    {
-      slug: 'fresh-fish',
-      coverImage: 'http://localhost:3000/media/images/resourses/hero.jpg',
-    },
-    {
-      slug: 'fresh-meat',
-      coverImage: 'http://localhost:3000/media/images/resourses/cover.jpg',
-    },
-  ],
+import Image from 'src/components/image';
+
+import { ICategory } from 'src/types/product';
+
+import HeroCarousel from './hero-carousel';
+
+type Props = {
+  categories: ICategory[];
 };
-
-export default function HomeHero() {
+export default function HomeHero({ categories }: Props) {
   const md = useResponsive('up', 'md');
-
+  console.log('categories.slice(0, 1');
+  console.log(categories.slice(0, 2));
   return (
-    <>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={8}>
-          <HeroCarousel />
-        </Grid>
-        <Grid item xs={4}>
-          {md && (
-            <Paper>
-              <RenderTags tags={DATA.tags} />
-            </Paper>
-          )}
-        </Grid>
+    <Grid container spacing={1}>
+      <Grid item xs={12} md={8}>
+        <HeroCarousel products={(categories.length > 0 && categories[0].products) || []} />
       </Grid>
-    </>
+      <Grid item xs={4}>
+        {md && (
+          <Paper>
+            <RenderTags tags={categories.slice(0, 2)} />
+          </Paper>
+        )}
+      </Grid>
+    </Grid>
   );
 }
 
@@ -58,10 +44,14 @@ function RenderTags({ tags }: { tags: { slug: string; coverImage: string }[] }) 
         transition={{ type: 'tween', stiffness: 50, duration: 1 }} // Animation transition
       >
         <Stack spacing={2}>
-          {tags.map((item, key) => (
-            <Box sx={{ position: 'relative' }}>
+          {tags.map((item, index) => (
+            <Box
+              key={index}
+              sx={{ position: 'relative' }}
+              component={RouterLink}
+              href={`/categories/${item.slug}`}
+            >
               <Image
-                key={key}
                 src={item.coverImage}
                 sx={{
                   height: '190px',
@@ -69,7 +59,7 @@ function RenderTags({ tags }: { tags: { slug: string; coverImage: string }[] }) 
                   borderRadius: '8px',
                 }}
               />
-              <Box
+              {/* <Box
                 sx={{
                   position: 'absolute',
                   bottom: '10%',
@@ -86,12 +76,14 @@ function RenderTags({ tags }: { tags: { slug: string; coverImage: string }[] }) 
                   color="primary"
                   sx={{
                     width: '140px',
+                    color: 'primary.main',
+                    backgroundColor: 'white',
                   }}
                   href={`/tags/${item.slug}`}
                 >
                   SHOP NOW
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
           ))}
         </Stack>

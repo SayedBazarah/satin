@@ -1,15 +1,12 @@
+import { useForm } from 'react-hook-form';
 import { useEffect, useCallback } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
-import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import { formHelperTextClasses } from '@mui/material/FormHelperText';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
@@ -18,8 +15,7 @@ import { fCurrency, fShortenNumber } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
-import { ColorPicker } from 'src/components/color-utils';
-import FormProvider, { RHFSelect } from 'src/components/hook-form';
+import FormProvider from 'src/components/hook-form';
 
 import { IProductItem } from 'src/types/product';
 import { ICheckoutItem } from 'src/types/checkout';
@@ -47,12 +43,10 @@ export default function ProductDetailsSummary({
   const router = useRouter();
 
   const {
-    id,
+    _id,
     name,
-    sizes,
     price,
-    coverUrl,
-    colors,
+    images,
     newLabel,
     available,
     priceSale,
@@ -63,18 +57,17 @@ export default function ProductDetailsSummary({
     subDescription,
   } = product;
 
-  const existProduct = !!items?.length && items.map((item) => item.id).includes(id);
-
+  const existProduct = !!items?.length && items.map((item) => item.id).includes(_id);
   const isMaxQuantity =
     !!items?.length &&
-    items.filter((item) => item.id === id).map((item) => item.quantity)[0] >= available;
-
+    items.filter((item) => item.id === _id).map((item) => item.quantity)[0] >= available;
   const defaultValues = {
-    id,
+    id: _id,
     name,
-    coverUrl,
+    coverUrl: images[0],
     available,
     price,
+    priceSale: 0,
     quantity: available < 1 ? 0 : 1,
   };
 
@@ -82,7 +75,7 @@ export default function ProductDetailsSummary({
     defaultValues,
   });
 
-  const { reset, watch, control, setValue, handleSubmit } = methods;
+  const { reset, watch, setValue, handleSubmit } = methods;
 
   const values = watch();
 
@@ -95,12 +88,15 @@ export default function ProductDetailsSummary({
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      // if (!existProduct) {
-      //   onAddCart?.({
-      //     ...data,
-      //     subTotal: data.price * data.quantity,
-      //   });
-      // }
+      if (!existProduct) {
+        onAddCart?.({
+          ...data,
+          priceSale: 1,
+          subTotal: values.priceSale
+            ? values.priceSale * values.quantity
+            : values.price * values.quantity,
+        });
+      }
       onGotoStep?.(0);
       router.push(paths.product.checkout);
     } catch (error) {
@@ -110,11 +106,12 @@ export default function ProductDetailsSummary({
 
   const handleAddCart = useCallback(() => {
     try {
-      // onAddCart?.({
-      //   ...values,
-      //   colors: [values.colors],
-      //   subTotal: values.price * values.quantity,
-      // });
+      onAddCart?.({
+        ...values,
+        subTotal: values.priceSale
+          ? values.priceSale * values.quantity
+          : values.price * values.quantity,
+      });
     } catch (error) {
       console.error(error);
     }
@@ -132,53 +129,53 @@ export default function ProductDetailsSummary({
               mr: 0.5,
             }}
           >
-            {fCurrency(priceSale)}
+            {fCurrency(price)}
           </Box>
         ))}
 
-      {fCurrency(price)}
+      {fCurrency((priceSale && priceSale) || price)}
     </Box>
   );
 
-  const renderShare = (
-    <Stack direction="row" spacing={3} justifyContent="center">
-      <Link
-        variant="subtitle2"
-        sx={{
-          color: 'text.secondary',
-          display: 'inline-flex',
-          alignItems: 'center',
-        }}
-      >
-        <Iconify icon="mingcute:add-line" width={16} sx={{ mr: 1 }} />
-        Compare
-      </Link>
+  // const renderShare = (
+  //   <Stack direction="row" spacing={3} justifyContent="center">
+  //     <Link
+  //       variant="subtitle2"
+  //       sx={{
+  //         color: 'text.secondary',
+  //         display: 'inline-flex',
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       <Iconify icon="mingcute:add-line" width={16} sx={{ mr: 1 }} />
+  //       Compare
+  //     </Link>
 
-      <Link
-        variant="subtitle2"
-        sx={{
-          color: 'text.secondary',
-          display: 'inline-flex',
-          alignItems: 'center',
-        }}
-      >
-        <Iconify icon="solar:heart-bold" width={16} sx={{ mr: 1 }} />
-        Favorite
-      </Link>
+  //     <Link
+  //       variant="subtitle2"
+  //       sx={{
+  //         color: 'text.secondary',
+  //         display: 'inline-flex',
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       <Iconify icon="solar:heart-bold" width={16} sx={{ mr: 1 }} />
+  //       Favorite
+  //     </Link>
 
-      <Link
-        variant="subtitle2"
-        sx={{
-          color: 'text.secondary',
-          display: 'inline-flex',
-          alignItems: 'center',
-        }}
-      >
-        <Iconify icon="solar:share-bold" width={16} sx={{ mr: 1 }} />
-        Share
-      </Link>
-    </Stack>
-  );
+  //     <Link
+  //       variant="subtitle2"
+  //       sx={{
+  //         color: 'text.secondary',
+  //         display: 'inline-flex',
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       <Iconify icon="solar:share-bold" width={16} sx={{ mr: 1 }} />
+  //       Share
+  //     </Link>
+  //   </Stack>
+  // );
 
   const renderQuantity = (
     <Stack direction="row">
@@ -291,7 +288,7 @@ export default function ProductDetailsSummary({
 
         {renderActions}
 
-        {renderShare}
+        {/* {renderShare} */}
       </Stack>
     </FormProvider>
   );

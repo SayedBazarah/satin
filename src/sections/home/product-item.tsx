@@ -1,4 +1,3 @@
-import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -12,11 +11,8 @@ import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
 import Image from 'src/components/image';
-import { ColorPreview } from 'src/components/color-utils';
 
 import { IProductItem } from 'src/types/product';
-
-import { useCheckoutContext } from '../checkout/context';
 
 // ----------------------------------------------------------------------
 
@@ -25,25 +21,13 @@ type Props = {
 };
 
 export default function ProductItem({ product, ...props }: Props) {
-  const { onAddToCart } = useCheckoutContext();
+  // const { onAddToCart } = useCheckoutContext();
 
-  const {
-    id,
-    name,
-    slug,
-    coverUrl,
-    price,
-    colors,
-    available,
-    sizes,
-    priceSale,
-    newLabel,
-    saleLabel,
-  } = product;
+  const { name, slug, coverUrl, price, available, priceSale, newLabel, saleLabel } = product;
 
   const linkTo = paths.product.details(slug);
 
-  // const handleAddCart = async () => {
+  // // const handleAddCart = async () => {
   //   const newProduct = {
   //     id,
   //     name,
@@ -106,7 +90,6 @@ export default function ProductItem({ product, ...props }: Props) {
       </Link>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between">
-        {colors && <ColorPreview colors={colors} />}
         <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
           {priceSale !== 0 && (
             <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>

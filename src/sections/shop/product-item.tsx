@@ -1,4 +1,3 @@
-import Fab from '@mui/material/Fab';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -16,7 +15,7 @@ import { ColorPreview } from 'src/components/color-utils';
 
 import { IProductItem } from 'src/types/product';
 
-import { useCheckoutContext } from '../checkout/context';
+// import { useCheckoutContext } from '../checkout/context';
 
 // ----------------------------------------------------------------------
 
@@ -25,21 +24,10 @@ type Props = {
 };
 
 export default function ProductItem({ product }: Props) {
-  const { onAddToCart } = useCheckoutContext();
+  // const { onAddToCart } = useCheckoutContext();
 
-  const {
-    id,
-    name,
-    slug,
-    coverUrl,
-    price,
-    colors,
-    available,
-    sizes,
-    priceSale,
-    newLabel,
-    saleLabel,
-  } = product;
+  const { name, slug, coverUrl, price, colors, available, priceSale, newLabel, saleLabel } =
+    product;
 
   const linkTo = paths.product.details(slug);
 
@@ -50,8 +38,7 @@ export default function ProductItem({ product }: Props) {
   //     coverUrl,
   //     available,
   //     price,
-  //     colors:  colors && [colors[0]] || [],
-  //     size: sizes && [0] || [],
+  //     priceSale,
   //     quantity: 1,
   //   };
   //   try {

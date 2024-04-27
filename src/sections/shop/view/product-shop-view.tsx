@@ -33,8 +33,9 @@ const defaultFilters: IProductFilters = {
   gender: [],
   colors: [],
   rating: '',
+  tag: 'all',
   category: 'all',
-  priceRange: [0, 200],
+  priceRange: [0, 2000],
 };
 
 // ----------------------------------------------------------------------
@@ -111,7 +112,7 @@ export default function ProductShopView() {
         results={searchResults}
         onSearch={handleSearch}
         loading={searchLoading}
-        hrefItem={(id: string) => paths.product.details(id)}
+        hrefItem={(slug: string) => paths.product.details(slug)}
       />
 
       <Stack direction="row" spacing={1} flexShrink={0}>
@@ -203,7 +204,7 @@ function applyFilter({
   filters: IProductFilters;
   sortBy: string;
 }) {
-  const { gender, category, colors, priceRange, rating } = filters;
+  const { gender, category, tag, colors, priceRange, rating } = filters;
 
   const min = priceRange[0];
 
@@ -233,6 +234,10 @@ function applyFilter({
 
   if (category !== 'all') {
     inputData = inputData.filter((product) => product.category === category);
+  }
+
+  if (tag !== 'all') {
+    inputData = inputData.filter((product) => product.tags.includes(tag));
   }
 
   if (colors.length) {

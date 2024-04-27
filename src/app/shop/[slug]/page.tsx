@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
-import { ShopView } from 'src/sections/shop/view';
-import { ShopProductDetailsView } from 'src/sections/shop/view';
 import axios, { endpoints } from 'src/utils/axios';
+
+import { ShopProductDetailsView } from 'src/sections/shop/view';
 
 export const metadata = {
   title: 'Details',

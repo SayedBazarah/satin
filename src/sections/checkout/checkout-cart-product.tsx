@@ -1,7 +1,5 @@
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
-import Divider from '@mui/material/Divider';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
@@ -9,13 +7,12 @@ import Typography from '@mui/material/Typography';
 
 import { fCurrency } from 'src/utils/format-number';
 
-import Label from 'src/components/label';
+import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
-import { ColorPreview } from 'src/components/color-utils';
 
 import { ICheckoutItem } from 'src/types/checkout';
 
-import IncrementerButton from '../product/common/incrementer-button';
+import IncrementerButton from '../shop/common/incrementer-button';
 
 // ----------------------------------------------------------------------
 
@@ -27,31 +24,35 @@ type Props = {
 };
 
 export default function CheckoutCartProduct({ row, onDelete, onDecrease, onIncrease }: Props) {
-  const { name, size, price, colors, coverUrl, quantity, available } = row;
+  const { name, price, priceSale, coverUrl, quantity, available } = row;
 
+  const subTotal = ((priceSale && priceSale) || price) * quantity;
   return (
     <TableRow>
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar variant="rounded" alt={name} src={coverUrl} sx={{ width: 64, height: 64, mr: 2 }} />
+        {/* <Avatar variant="rounded" alt={name} src={coverUrl} sx={{ width: 64, height: 64, mr: 2 }} /> */}
+        <Image alt={name} src={coverUrl} sx={{ width: 64, height: 64, mr: 2, borderRadius: 1 }} />
 
         <Stack spacing={0.5}>
           <Typography noWrap variant="subtitle2" sx={{ maxWidth: 240 }}>
             {name}
           </Typography>
-
-          <Stack
-            direction="row"
-            alignItems="center"
-            sx={{ typography: 'body2', color: 'text.secondary' }}
-          >
-            size: <Label sx={{ ml: 0.5 }}> {size} </Label>
-            <Divider orientation="vertical" sx={{ mx: 1, height: 16 }} />
-            <ColorPreview colors={colors} />
-          </Stack>
         </Stack>
       </TableCell>
 
-      <TableCell>{fCurrency(price)}</TableCell>
+      <TableCell>
+        <Typography
+          sx={{
+            ...(priceSale && {
+              textDecoration: 'line-through',
+              color: 'gray',
+            }),
+          }}
+        >
+          {fCurrency(price)}
+        </Typography>
+        <Typography>{fCurrency(priceSale)}</Typography>
+      </TableCell>
 
       <TableCell>
         <Box sx={{ width: 88, textAlign: 'right' }}>
@@ -69,7 +70,7 @@ export default function CheckoutCartProduct({ row, onDelete, onDecrease, onIncre
         </Box>
       </TableCell>
 
-      <TableCell align="right">{fCurrency(price * quantity)}</TableCell>
+      <TableCell align="right">{fCurrency(subTotal)}</TableCell>
 
       <TableCell align="right" sx={{ px: 1 }}>
         <IconButton onClick={onDelete}>

@@ -16,7 +16,7 @@ import Iconify from 'src/components/iconify';
 
 import { ICheckoutCardOption, ICheckoutPaymentOption } from 'src/types/checkout';
 
-import PaymentNewCardDialog from '../payment/payment-new-card-dialog';
+import PaymentNewCardDialog from './payment-new-card-dialog';
 
 // ----------------------------------------------------------------------
 

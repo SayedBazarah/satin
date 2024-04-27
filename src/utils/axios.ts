@@ -50,7 +50,13 @@ export const endpoints = {
   product: {
     list: '/api/product/shop',
     slugs: '/api/product/slugs',
+    categories_tags: '/api/product/categories-tags',
     details: (slug: string) => `/api/product/details/${slug}`,
-    search: '/api/product/search',
+    search: (query: string) => `/api/product/search/${query}`,
   },
+  category: {
+    list: '/api/category',
+    details: (slug: string) => `/api/category/${slug}`,
+  },
+  landing: '/api/general/landing-page',
 };

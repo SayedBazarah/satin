@@ -57,54 +57,35 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
 
 const StyledNavItem = styled(ListItemButton, {
   shouldForwardProp: (prop) => prop !== 'active' && prop !== 'subItem',
-})<NavItemStateProps>(({ open, active, subItem, theme }) => {
-  const dotStyles = {
-    width: 6,
-    height: 6,
-    left: -12,
-    opacity: 0.64,
-    content: '""',
-    borderRadius: '50%',
-    position: 'absolute',
-    backgroundColor: 'currentColor',
+})<NavItemStateProps>(({ active, subItem, theme }) => ({
+  ...(!subItem && {
+    ...theme.typography.body2,
+    padding: 0,
+    height: '100%',
+    fontWeight: theme.typography.fontWeightMedium,
+    transition: theme.transitions.create(['all'], {
+      duration: theme.transitions.duration.shorter,
+    }),
+    '&:hover': {
+      opacity: 0.64,
+      backgroundColor: 'transparent',
+    },
     ...(active && {
       color: theme.palette.primary.main,
+      fontWeight: theme.typography.fontWeightSemiBold,
     }),
-  };
-
-  return {
-    // Root item
-    ...(!subItem && {
-      ...theme.typography.body2,
-      padding: 0,
-      height: '100%',
-      fontWeight: theme.typography.fontWeightMedium,
-      transition: theme.transitions.create(['all'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-      '&:hover': {
-        opacity: 0.64,
-        backgroundColor: 'transparent',
-      },
-      ...(active && {
-        color: theme.palette.primary.main,
-        fontWeight: theme.typography.fontWeightSemiBold,
-      }),
+  }),
+  ...(subItem && {
+    ...theme.typography.body2,
+    padding: 0,
+    fontSize: 13,
+    color: theme.palette.text.secondary,
+    fontWeight: theme.typography.fontWeightMedium,
+    transition: theme.transitions.create(['all'], {
+      duration: theme.transitions.duration.shorter,
     }),
-
-    // Sub item
-    ...(subItem && {
-      ...theme.typography.body2,
-      padding: 0,
-      fontSize: 13,
-      color: theme.palette.text.secondary,
-      fontWeight: theme.typography.fontWeightMedium,
-      transition: theme.transitions.create(['all'], {
-        duration: theme.transitions.duration.shorter,
-      }),
-    }),
-  };
-});
+  }),
+}));
 
 // ----------------------------------------------------------------------
 
