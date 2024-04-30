@@ -67,7 +67,7 @@ export default function ProductDetailsSummary({
     coverUrl: images[0],
     available,
     price,
-    priceSale: 0,
+    priceSale: priceSale || 0,
     quantity: available < 1 ? 0 : 1,
   };
 
@@ -91,7 +91,6 @@ export default function ProductDetailsSummary({
       if (!existProduct) {
         onAddCart?.({
           ...data,
-          priceSale: 1,
           subTotal: values.priceSale
             ? values.priceSale * values.quantity
             : values.price * values.quantity,

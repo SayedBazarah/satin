@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import { LoadingButton } from '@mui/lab';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 
@@ -27,10 +28,10 @@ export default function CheckoutBillingAddress() {
   });
 
   const defaultValues = {
-    name: '',
-    address: '',
-    phoneNumber: '',
-    email: '',
+    name: checkout.billing?.name || '',
+    address: checkout.billing?.address || '',
+    phoneNumber: checkout.billing?.phoneNumber || '',
+    email: checkout.billing?.email || '',
   };
 
   const methods = useForm({
@@ -38,14 +39,14 @@ export default function CheckoutBillingAddress() {
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log('data');
-    console.log(data);
-    console.log('request');
-    console.log({ products: checkout.items, address: data });
-    checkout.onComplete();
+    checkout.onCreateBilling(data);
+    checkout.onNextStep();
   });
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
@@ -69,14 +70,7 @@ export default function CheckoutBillingAddress() {
 
             <RHFTextField name="address" label="Address" />
           </Stack>
-        </Grid>
-        <Grid xs={12} md={4}>
-          <CheckoutSummary
-            total={checkout.total}
-            subTotal={checkout.subTotal}
-            discount={checkout.discount}
-          />
-          <Stack direction="row" justifyContent="space-between">
+          <Box mt={2}>
             <Button
               size="small"
               color="inherit"
@@ -85,16 +79,24 @@ export default function CheckoutBillingAddress() {
             >
               Back
             </Button>
-
-            <Button
-              size="small"
-              color="primary"
-              variant="contained"
+          </Box>
+        </Grid>
+        <Grid xs={12} md={4}>
+          <CheckoutSummary
+            total={checkout.total}
+            subTotal={checkout.subTotal}
+            discount={checkout.discount}
+          />
+          <Stack direction="row" justifyContent="space-between">
+            <LoadingButton
+              fullWidth
+              size="large"
               type="submit"
-              startIcon={<Iconify icon="lets-icons:done-ring-round" />}
+              variant="contained"
+              loading={isSubmitting}
             >
-              Submit Order
-            </Button>
+              Complete Order
+            </LoadingButton>
           </Stack>
         </Grid>
       </Grid>

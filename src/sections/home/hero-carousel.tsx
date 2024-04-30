@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { m as motion } from 'framer-motion';
 
-import { Box, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Box, Card, Grid, Paper, Stack, Typography } from '@mui/material';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -42,11 +42,8 @@ export default function HeroCarousel({ products }: Props) {
   );
 }
 
-const SliderItem = ({ product }: { product: IProductItem }) => {
-  console.log('product');
-  console.log(product.category);
-  return (
-    <Box component={RouterLink} href={`/shop/${product.slug}`} sx={{ textDecoration: 'none' }}>
+const SliderItem = ({ product }: { product: IProductItem }) => (
+    <Card component={RouterLink} href={`/shop/${product.slug}`} sx={{ textDecoration: 'none' }}>
       <Grid container spacing={2} px="10px">
         <Grid item xs={6}>
           <Paper>
@@ -57,9 +54,6 @@ const SliderItem = ({ product }: { product: IProductItem }) => {
                   {product.name}
                 </Typography>
               </Box>
-              <Typography variant="caption" color="primary.main">
-                Category:
-              </Typography>
               <Typography variant="button" fontWeight={700}>
                 {product.description}
               </Typography>
@@ -88,6 +82,5 @@ const SliderItem = ({ product }: { product: IProductItem }) => {
           </Paper>
         </Grid>
       </Grid>
-    </Box>
+    </Card>
   );
-};

@@ -30,11 +30,9 @@ export default function CheckoutBillingInfo({ billing, onBackStep }: Props) {
         <Box sx={{ typography: 'subtitle2' }}>
           {`${billing?.name} `}
           <Box component="span" sx={{ color: 'text.secondary', typography: 'body2' }}>
-            ({billing?.addressType})
+            ({billing?.address})
           </Box>
         </Box>
-
-        <Box sx={{ color: 'text.secondary', typography: 'body2' }}>{billing?.fullAddress}</Box>
 
         <Box sx={{ color: 'text.secondary', typography: 'body2' }}>{billing?.phoneNumber}</Box>
       </Stack>

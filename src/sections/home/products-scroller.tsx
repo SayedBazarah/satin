@@ -35,9 +35,8 @@ export default function ProductsScroller({ products }: Props) {
       >
         <Box>
           <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
-            {products.map((product, index) => (
-              <ProductItem key={index} product={product} />
-            ))}
+            {products.length > 1 &&
+              products.map((product, index) => <ProductItem key={index} product={product} />)}
           </Carousel>
         </Box>
       </motion.div>

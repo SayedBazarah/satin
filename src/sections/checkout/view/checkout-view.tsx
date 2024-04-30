@@ -22,7 +22,7 @@ export default function CheckoutView() {
 
   const checkout = useCheckoutContext();
 
-  const PRODUCT_CHECKOUT_STEPS = ['Cart', 'Billing & address'];
+  const PRODUCT_CHECKOUT_STEPS = ['Cart', 'Billing & address', 'Shipping'];
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'} sx={{ mb: 10 }}>
@@ -48,7 +48,7 @@ export default function CheckoutView() {
 
           {checkout.activeStep === 1 && <CheckoutBillingAddress />}
 
-          {checkout.activeStep === 2 && checkout.billing && <CheckoutPayment />}
+          {checkout.activeStep === 2 && <CheckoutPayment />}
         </>
       )}
     </Container>

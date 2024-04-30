@@ -6,11 +6,12 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Unstable_Grid2';
 import LoadingButton from '@mui/lab/LoadingButton';
 
+import axios, { endpoints } from 'src/utils/axios';
+
 import Iconify from 'src/components/iconify';
 import FormProvider from 'src/components/hook-form';
 
 import {
-  ICheckoutCardOption,
   ICheckoutPaymentOption,
   ICheckoutDeliveryOption,
 } from 'src/types/checkout';
@@ -27,31 +28,21 @@ const DELIVERY_OPTIONS: ICheckoutDeliveryOption[] = [
   {
     value: 0,
     label: 'Free',
-    description: '5-7 Days delivery',
+    description: '24 Hours delivery',
   },
   {
     value: 10,
     label: 'Standard',
-    description: '3-5 Days delivery',
+    description: '3-6 Hours delivery',
   },
   {
-    value: 20,
+    value: 15,
     label: 'Express',
-    description: '2-3 Days delivery',
+    description: '1 Hours delivery',
   },
 ];
 
 const PAYMENT_OPTIONS: ICheckoutPaymentOption[] = [
-  {
-    value: 'paypal',
-    label: 'Pay with Paypal',
-    description: 'You will be redirected to PayPal website to complete your purchase securely.',
-  },
-  {
-    value: 'credit',
-    label: 'Credit / Debit Card',
-    description: 'We support Mastercard, Visa, Discover and Stripe.',
-  },
   {
     value: 'cash',
     label: 'Cash',
@@ -59,22 +50,15 @@ const PAYMENT_OPTIONS: ICheckoutPaymentOption[] = [
   },
 ];
 
-const CARDS_OPTIONS: ICheckoutCardOption[] = [
-  { value: 'ViSa1', label: '**** **** **** 1212 - Jimmy Holland' },
-  { value: 'ViSa2', label: '**** **** **** 2424 - Shawn Stokes' },
-  { value: 'MasterCard', label: '**** **** **** 4545 - Cole Armstrong' },
-];
-
 export default function CheckoutPayment() {
   const checkout = useCheckoutContext();
-
   const PaymentSchema = Yup.object().shape({
     payment: Yup.string().required('Payment is required'),
   });
 
   const defaultValues = {
     delivery: checkout.shipping,
-    payment: '',
+    payment: 'cash',
   };
 
   const methods = useForm({
@@ -89,9 +73,17 @@ export default function CheckoutPayment() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
+      await axios.post(endpoints.order.create, {
+        shipping: checkout.shipping,
+        discount: checkout.discount,
+        subTotal: checkout.subTotal,
+        totalAmount: checkout.total,
+        items: checkout.items,
+        billing: checkout.billing,
+        payment: data.payment,
+      });
       checkout.onNextStep();
       checkout.onReset();
-      console.info('DATA', data);
     } catch (error) {
       console.error(error);
     }
@@ -103,11 +95,7 @@ export default function CheckoutPayment() {
         <Grid xs={12} md={8}>
           <CheckoutDelivery onApplyShipping={checkout.onApplyShipping} options={DELIVERY_OPTIONS} />
 
-          <CheckoutPaymentMethods
-            cardOptions={CARDS_OPTIONS}
-            options={PAYMENT_OPTIONS}
-            sx={{ my: 3 }}
-          />
+          <CheckoutPaymentMethods options={PAYMENT_OPTIONS} sx={{ my: 3 }} />
 
           <Button
             size="small"

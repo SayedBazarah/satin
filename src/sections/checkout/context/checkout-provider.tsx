@@ -11,6 +11,7 @@ import { getStorage, useLocalStorage } from 'src/hooks/use-local-storage';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { IAddressItem } from 'src/types/address';
 import { ICheckoutItem } from 'src/types/checkout';
 
 import { CheckoutContext } from './checkout-context';
@@ -26,7 +27,6 @@ const initialState = {
   total: 0,
   discount: 0,
   shipping: 0,
-  billing: null,
   totalItems: 0,
 };
 
@@ -38,7 +38,6 @@ export function CheckoutProvider({ children }: Props) {
   const router = useRouter();
 
   const { state, update, reset } = useLocalStorage(STORAGE_KEY, initialState);
-
   const onGetCart = useCallback(() => {
     const totalItems: number = state.items.reduce(
       (total: number, item: ICheckoutItem) => total + item.quantity,
@@ -55,12 +54,11 @@ export function CheckoutProvider({ children }: Props) {
         item.priceSale && (item.price - item.priceSale) * item.quantity,
       0
     );
-    console.log(totalProductsDiscount);
+
     update('subTotal', subTotal);
     update('totalItems', totalItems);
-    update('billing', state.activeStep === 1 ? null : state.billing);
     update('discount', state.items.length ? totalProductsDiscount : 0);
-    update('shipping', state.items.length ? state.shipping : 0);
+    update('shipping', state.items.length ? state.shipping : 10);
     update('total', state.subTotal - state.discount + state.shipping);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -159,14 +157,13 @@ export function CheckoutProvider({ children }: Props) {
     [update, state.items]
   );
 
-  // const onCreateBilling = useCallback(
-  //   (address: IAddressItem) => {
-  //     update('billing', address);
-
-  //     onNextStep();
-  //   },
-  //   [onNextStep, update]
-  // );
+  const onCreateBilling = useCallback(
+    (address: IAddressItem) => {
+      update('billing', address);
+      onNextStep();
+    },
+    [onNextStep, update]
+  );
 
   // const onApplyDiscount = useCallback(
   //   (discount: number) => {
@@ -206,6 +203,7 @@ export function CheckoutProvider({ children }: Props) {
       onDecreaseQuantity,
       onIncreaseQuantity,
       //
+      onCreateBilling,
       onApplyShipping,
       //
       onBackStep,
@@ -219,6 +217,7 @@ export function CheckoutProvider({ children }: Props) {
       onAddToCart,
       onApplyShipping,
       onBackStep,
+      onCreateBilling,
       onDecreaseQuantity,
       onIncreaseQuantity,
       onDeleteCart,
