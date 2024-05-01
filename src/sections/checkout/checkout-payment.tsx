@@ -11,10 +11,7 @@ import axios, { endpoints } from 'src/utils/axios';
 import Iconify from 'src/components/iconify';
 import FormProvider from 'src/components/hook-form';
 
-import {
-  ICheckoutPaymentOption,
-  ICheckoutDeliveryOption,
-} from 'src/types/checkout';
+import { ICheckoutPaymentOption, ICheckoutDeliveryOption } from 'src/types/checkout';
 
 import { useCheckoutContext } from './context';
 import CheckoutSummary from './checkout-summary';
@@ -73,7 +70,7 @@ export default function CheckoutPayment() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await axios.post(endpoints.order.create, {
+      const order = {
         shipping: checkout.shipping,
         discount: checkout.discount,
         subTotal: checkout.subTotal,
@@ -81,7 +78,8 @@ export default function CheckoutPayment() {
         items: checkout.items,
         billing: checkout.billing,
         payment: data.payment,
-      });
+      };
+      await axios.post(endpoints.order.create, order);
       checkout.onNextStep();
       checkout.onReset();
     } catch (error) {
