@@ -14,5 +14,6 @@ export default function Page({ params }: { params: { slug: string } }) {
 
 export async function generateStaticParams() {
   const res = await axios.get(endpoints.product.slugs);
+
   return res.data.slugs;
 }
