@@ -3,6 +3,11 @@ import 'src/global.css';
 
 // ----------------------------------------------------------------------
 
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+
+// ----------------------------------------------------------------------
+
 import ThemeProvider from 'src/theme';
 import { primaryFont } from 'src/theme/typography';
 
@@ -12,6 +17,8 @@ import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
 import { CheckoutProvider } from 'src/sections/checkout/context';
+import { localStorageGetItem } from 'src/utils/storage-available';
+import { useLocalStorage } from 'src/hooks/use-local-storage';
 
 // ----------------------------------------------------------------------
 
@@ -23,7 +30,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Minimal UI Kit',
+  title: 'Multisystem',
   description:
     'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
   keywords: 'react,material,kit,application,dashboard,admin,template',
@@ -38,35 +45,46 @@ export const metadata = {
 
 type Props = {
   children: React.ReactNode;
+  params: { locale: string };
 };
 
-export default function RootLayout({ children }: Props) {
+export default async function LocaleLayout({ children, params: { locale } }: Props) {
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={primaryFont.className}>
+    <html lang={locale} className={primaryFont.className}>
       <body>
         <AuthProvider>
           <SettingsProvider
             defaultSettings={{
               themeMode: 'light', // 'light' | 'dark'
-              themeDirection: 'ltr', //  'rtl' | 'ltr'
+              themeDirection: 'rtl', //  'rtl' | 'ltr'
               themeContrast: 'default', // 'default' | 'bold'
               themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
               themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
               themeStretch: false,
             }}
           >
-            <ThemeProvider>
-              <MotionLazy>
-                <CheckoutProvider>
-                  <SettingsDrawer />
-                  <ProgressBar />
-                  {children}
-                </CheckoutProvider>
-              </MotionLazy>
-            </ThemeProvider>
+            <NextIntlClientProvider messages={messages}>
+              <ThemeProvider>
+                <MotionLazy>
+                  <CheckoutProvider>
+                    <SettingsDrawer />
+                    <ProgressBar />
+                    {children}
+                  </CheckoutProvider>
+                </MotionLazy>
+              </ThemeProvider>
+            </NextIntlClientProvider>
           </SettingsProvider>
         </AuthProvider>
       </body>
     </html>
   );
+}
+
+const locales = ['en', 'ar'];
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
 }

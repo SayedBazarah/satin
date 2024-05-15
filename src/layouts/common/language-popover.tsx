@@ -8,42 +8,19 @@ import Iconify from 'src/components/iconify';
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-// ----------------------------------------------------------------------
+import { useLocale } from 'src/locales/use-locale';
 
-export const allLangs = [
-  {
-    label: 'English',
-    value: 'en',
-    icon: 'flagpack:gb-nir',
-  },
-  {
-    label: 'French',
-    value: 'fr',
-    icon: 'flagpack:fr',
-  },
-  {
-    label: 'Vietnamese',
-    value: 'vi',
-    icon: 'flagpack:vn',
-  },
-  {
-    label: 'Chinese',
-    value: 'cn',
-    icon: 'flagpack:cn',
-  },
-  {
-    label: 'Arabic',
-    value: 'ar',
-    icon: 'flagpack:sa',
-  },
-];
+// ----------------------------------------------------------------------
 
 export default function LanguagePopover() {
   const popover = usePopover();
 
-  const currentLang = allLangs[0];
+  const { changeLang } = useLocale();
+  const { allLangs, currentLang } = useLocale();
 
   const handleChangeLang = useCallback(() => {
+    changeLang();
+    console.log('handleChangeLang');
     popover.onClose();
   }, [popover]);
 
