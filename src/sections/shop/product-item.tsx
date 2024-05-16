@@ -74,7 +74,6 @@ export default function ProductItem({ product }: Props) {
       href={paths.product.details(slug)}
       sx={{
         position: 'relative',
-        p: 1,
       }}
     >
       <Tooltip title={!available && 'Out of stock'} placement="bottom-end">
