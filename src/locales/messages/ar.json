@@ -1,3 +1,89 @@
 {
-  "app": "التطبيق"
+  "common": {
+    "brand-description": "بوابتك للتجارة الالكترونية",
+
+    "search": "بحث...",
+    "filters": "تصنيف",
+    "sort": "الترتيب بواسطة",
+
+    "results-found": "نتائج البحث",
+    "category": "القسم:",
+    "tag": "علامة:",
+    "price": "السعر:",
+    "color": "الالوان:",
+    "gender": "الجنس:",
+    "rating": "التقييم:",
+
+    "min": "اقل:",
+    "max": "اكثر:",
+
+    "enter-key": "ادخل اي حرف للبحث",
+    "not-found": "لا يوجد نتائج",
+    "no-results": "لا توجد نتائج ل ",
+    "try-check": "حاول البحث بكلمة اخري.",
+
+    "clear": "مسح"
+  },
+  "header": {
+    "home": "الرئيسية",
+    "shop": "المتجر",
+    "categories": "الاقسام"
+  },
+  "shop": {
+    "root": "المتجر",
+    "home": "الرئيسية",
+
+    "shop-all": "جميع المنتجات",
+    "shop-category": "تسوق الاقسام",
+
+    "description": "الوصف",
+    "reviews": "التقييم",
+    "quantity": "الكيمة",
+    "available": "متاح",
+    "buy-now": "شراء الان",
+
+    "add-to-cart": "اضف الي العربة"
+  },
+  "checkout": {
+    "root": "الدفع",
+    "edit": "تعديل",
+    "cart-empty": "السلة فارغة!",
+    "cart-empty-description": "يبدو أنه ليس لديك أي منتج في سلة التسوق الخاصة بك.",
+    "cart": "سلة المشتريات",
+    "item": "عنصر",
+    "billing-address": "الفاتورة والعنوان",
+    "shipping": "الشحن",
+    "order-summary": "ملخص الطلب",
+    "subtotal": "الاجمالي الفرعي",
+    "discount": "الخصم",
+    "total": "الاجمالي",
+    "checkout": "اكمل",
+    "vat": "ضريبة القيمة المضافة متضمنة إن وجدت",
+    "available": "متاح",
+    "product": "المنتج",
+    "price": "السعر",
+    "total-price": "اجمالي السعر",
+    "quantity": "الكمية",
+    "delivery": "التوصيل",
+    "payment": "طريقة الدفع",
+    "cash": "نقداً",
+    "cash-delivery": "دفع عند الاستلام",
+    "continue-shopping": "اكمل التسوق",
+    "complete": "اتمم الطلب",
+    "back": "العودة للخطوة السابقة",
+    "delivery-option": {
+      "postal": "البريد",
+      "postal-details": "١ - ٣ ايام عمل"
+    },
+    "yup": {
+      "name": "الاسم بالكامل",
+      "name-require": "يجب ان تدخل اسمك بالكامل",
+      "phone": "رقم هاتفك",
+      "phone-require": "يجب ادخال رقم هاتفك",
+      "email": "البريد الالكتروني",
+      "email-require": "البريد الالكتروني مطلوب",
+      "address": "العنوان",
+      "address-require": "العنوان مطلوب"
+    }
+  }
 }

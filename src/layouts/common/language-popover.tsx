@@ -4,25 +4,26 @@ import { useCallback } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import IconButton from '@mui/material/IconButton';
 
+import { useLocale } from 'src/locales/use-locale';
+
 import Iconify from 'src/components/iconify';
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
-
-import { useLocale } from 'src/locales/use-locale';
 
 // ----------------------------------------------------------------------
 
 export default function LanguagePopover() {
   const popover = usePopover();
 
-  const { changeLang } = useLocale();
-  const { allLangs, currentLang } = useLocale();
+  const { allLangs, currentLang, changeLang } = useLocale();
 
-  const handleChangeLang = useCallback(() => {
-    changeLang();
-    console.log('handleChangeLang');
-    popover.onClose();
-  }, [popover]);
+  const handleChangeLang = useCallback(
+    (newLang: string) => {
+      changeLang(newLang);
+      popover.onClose();
+    },
+    [popover, changeLang]
+  );
 
   return (
     <>
@@ -48,7 +49,7 @@ export default function LanguagePopover() {
           <MenuItem
             key={option.value}
             selected={option.value === currentLang.value}
-            onClick={handleChangeLang}
+            onClick={() => handleChangeLang(option.value)}
           >
             <Iconify icon={option.icon} sx={{ borderRadius: 0.65, width: 28 }} />
 

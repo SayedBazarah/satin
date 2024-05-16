@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 
@@ -26,6 +27,8 @@ type Props = {
 };
 
 export default function ProductSearch({ query, results, onSearch, hrefItem, loading }: Props) {
+  const t = useTranslations('common');
+
   const router = useRouter();
 
   const handleClick = (slug: string) => {
@@ -71,7 +74,7 @@ export default function ProductSearch({ query, results, onSearch, hrefItem, load
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Search..."
+          placeholder={t('search')}
           onKeyUp={handleKeyUp}
           InputProps={{
             ...params.InputProps,

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Box } from '@mui/material';
@@ -20,10 +21,12 @@ import CheckoutSummary from './checkout-summary';
 export default function CheckoutBillingAddress() {
   const checkout = useCheckoutContext();
 
+  const t = useTranslations('checkout');
+
   const AddressSchema = Yup.object().shape({
-    name: Yup.string().required('Fullname is required'),
-    address: Yup.string().required('Address is required'),
-    phoneNumber: Yup.string().required('Phone number is required'),
+    name: Yup.string().required(t('yup.name-require')),
+    address: Yup.string().required(t('yup.address-require')),
+    phoneNumber: Yup.string().required(t('yup.phone-require')),
     email: Yup.string(),
   });
 
@@ -62,13 +65,13 @@ export default function CheckoutBillingAddress() {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
+              <RHFTextField name="name" label={t('yup.name')} />
 
-              <RHFTextField name="phoneNumber" label="Phone Number" />
+              <RHFTextField name="phoneNumber" label={t('yup.phone')} />
             </Box>
-            <RHFTextField name="email" label="Email" />
+            <RHFTextField name="email" label={t('yup.email')} />
 
-            <RHFTextField name="address" label="Address" />
+            <RHFTextField name="address" label={t('yup.address')} />
           </Stack>
           <Box mt={2}>
             <Button
@@ -77,7 +80,7 @@ export default function CheckoutBillingAddress() {
               onClick={checkout.onBackStep}
               startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
             >
-              Back
+              {t('back')}
             </Button>
           </Box>
         </Grid>
@@ -95,7 +98,7 @@ export default function CheckoutBillingAddress() {
               variant="contained"
               loading={isSubmitting}
             >
-              Complete Order
+              {t('checkout')}
             </LoadingButton>
           </Stack>
         </Grid>

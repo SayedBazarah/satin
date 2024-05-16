@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
@@ -26,12 +27,14 @@ interface Props extends CardProps {
 export default function CheckoutPaymentMethods({ options, cardOptions, ...other }: Props) {
   const { control } = useFormContext();
 
+  const t = useTranslations('checkout');
+
   const newCard = useBoolean();
 
   return (
     <>
       <Card {...other}>
-        <CardHeader title="Payment" />
+        <CardHeader title={t('payment')} />
 
         <Controller
           name="payment"

@@ -17,8 +17,6 @@ import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
 import { CheckoutProvider } from 'src/sections/checkout/context';
-import { localStorageGetItem } from 'src/utils/storage-available';
-import { useLocalStorage } from 'src/hooks/use-local-storage';
 
 // ----------------------------------------------------------------------
 
@@ -83,8 +81,8 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   );
 }
 
-const locales = ['en', 'ar'];
+// const locales = ['en'];
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+// export function generateStaticParams() {
+//   return locales.map((locale) => ({ locale }));
+// }

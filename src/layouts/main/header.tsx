@@ -16,8 +16,7 @@ import Logo from 'src/components/logo';
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';
 import { HEADER } from '../config-layout';
-import { navConfig } from './config-navigation';
-import LoginButton from '../common/login-button';
+import { NavConfig } from './config-navigation';
 import HeaderShadow from '../common/header-shadow';
 import LanguagePopover from '../common/language-popover';
 
@@ -60,11 +59,11 @@ export default function Header() {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          {mdUp && <NavDesktop data={navConfig} />}
+          {mdUp && <NavDesktop data={NavConfig()} />}
 
           <LanguagePopover />
           <Stack alignItems="center" direction={{ xs: 'row', md: 'row-reverse' }}>
-            {!mdUp && <NavMobile data={navConfig} />}
+            {!mdUp && <NavMobile data={NavConfig()} />}
           </Stack>
         </Container>
       </Toolbar>

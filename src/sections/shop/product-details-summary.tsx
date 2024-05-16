@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -42,6 +43,8 @@ export default function ProductDetailsSummary({
 }: Props) {
   const router = useRouter();
 
+  const t = useTranslations('shop');
+
   const {
     _id,
     name,
@@ -58,9 +61,11 @@ export default function ProductDetailsSummary({
   } = product;
 
   const existProduct = !!items?.length && items.map((item) => item.id).includes(_id);
+
   const isMaxQuantity =
     !!items?.length &&
     items.filter((item) => item.id === _id).map((item) => item.quantity)[0] >= available;
+
   const defaultValues = {
     id: _id,
     name,
@@ -179,7 +184,7 @@ export default function ProductDetailsSummary({
   const renderQuantity = (
     <Stack direction="row">
       <Typography variant="subtitle2" sx={{ flexGrow: 1 }}>
-        Quantity
+        {t('description')}
       </Typography>
 
       <Stack spacing={1}>
@@ -193,7 +198,7 @@ export default function ProductDetailsSummary({
         />
 
         <Typography variant="caption" component="div" sx={{ textAlign: 'right' }}>
-          Available: {available}
+          {t('available')}: {available}
         </Typography>
       </Stack>
     </Stack>
@@ -211,11 +216,11 @@ export default function ProductDetailsSummary({
         onClick={handleAddCart}
         sx={{ whiteSpace: 'nowrap' }}
       >
-        Add to Cart
+        {t('add-to-cart')}
       </Button>
 
       <Button fullWidth size="large" type="submit" variant="contained" disabled={disabledActions}>
-        Buy Now
+        {t('buy-now')}
       </Button>
     </Stack>
   );
@@ -236,7 +241,7 @@ export default function ProductDetailsSummary({
       }}
     >
       <Rating size="small" value={totalRatings} precision={0.1} readOnly sx={{ mr: 1 }} />
-      {`(${fShortenNumber(totalReviews)} reviews)`}
+      {`(${fShortenNumber(totalReviews)} ${t('reviews')} )`}
     </Stack>
   );
 

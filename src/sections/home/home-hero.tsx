@@ -17,8 +17,7 @@ type Props = {
 };
 export default function HomeHero({ categories }: Props) {
   const md = useResponsive('up', 'md');
-  console.log('categories.slice(0, 1');
-  console.log(categories.slice(0, 2));
+
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} md={8}>

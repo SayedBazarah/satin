@@ -20,15 +20,18 @@ type Props = {
 };
 export default function CategorySection({ title, href, coverImage = '', products = [] }: Props) {
   const md = useResponsive('up', 'md');
+
   return (
     <Box
       component={RouterLink}
       href={(href && href) || ''}
       sx={{
         textDecoration: 'none',
+        bgcolor: '#000',
+        width: '100%',
       }}
     >
-      <Stack spacing={5}>
+      <Stack spacing={1}>
         <Box position="relative">
           {coverImage && (
             <Image

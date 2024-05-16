@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -34,16 +36,18 @@ export default function CheckoutSummary({
   onEdit,
   onApplyDiscount,
 }: Props) {
-  const displayShipping = shipping !== null ? 'Free' : '-';
+  const t = useTranslations('checkout');
+
+  const displayShipping = '-';
 
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Order Summary"
+        title={t('order-summary')}
         action={
           onEdit && (
             <Button size="small" onClick={onEdit} startIcon={<Iconify icon="solar:pen-bold" />}>
-              Edit
+              {t('edit')}
             </Button>
           )
         }
@@ -53,21 +57,21 @@ export default function CheckoutSummary({
         <Stack spacing={2}>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Sub Total
+              {t('subtotal')}
             </Typography>
             <Typography variant="subtitle2">{fCurrency(subTotal)}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Discount
+              {t('discount')}
             </Typography>
             <Typography variant="subtitle2">{discount ? fCurrency(-discount) : '-'}</Typography>
           </Stack>
 
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Shipping
+              {t('shipping')}
             </Typography>
             <Typography variant="subtitle2">
               {shipping ? fCurrency(shipping) : displayShipping}
@@ -77,13 +81,13 @@ export default function CheckoutSummary({
           <Divider sx={{ borderStyle: 'dashed' }} />
 
           <Stack direction="row" justifyContent="space-between">
-            <Typography variant="subtitle1">Total</Typography>
+            <Typography variant="subtitle1">{t('total')}</Typography>
             <Box sx={{ textAlign: 'right' }}>
               <Typography variant="subtitle1" sx={{ color: 'error.main' }}>
                 {fCurrency(total)}
               </Typography>
               <Typography variant="caption" sx={{ fontStyle: 'italic' }}>
-                (VAT included if applicable)
+                {t('vat')}
               </Typography>
             </Box>
           </Stack>

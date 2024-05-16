@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Box, { BoxProps } from '@mui/material/Box';
 import Pagination, { paginationClasses } from '@mui/material/Pagination';
 
@@ -14,6 +16,11 @@ type Props = BoxProps & {
 };
 
 export default function ProductList({ products, loading, ...other }: Props) {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const productsPerPage = 12;
+  const pages = Math.ceil(products.length / productsPerPage);
+
   const renderSkeleton = (
     <>
       {[...Array(16)].map((_, index) => (
@@ -24,9 +31,11 @@ export default function ProductList({ products, loading, ...other }: Props) {
 
   const renderList = (
     <>
-      {products.map((product, index) => (
-        <ProductItem key={index} product={product} />
-      ))}
+      {products
+        .slice(currentPage * productsPerPage, currentPage * productsPerPage + productsPerPage)
+        .map((product, index) => (
+          <ProductItem key={index} product={product} />
+        ))}
     </>
   );
 
@@ -46,9 +55,10 @@ export default function ProductList({ products, loading, ...other }: Props) {
         {loading ? renderSkeleton : renderList}
       </Box>
 
-      {products.length > 8 && (
+      {products.length > 12 && (
         <Pagination
-          count={2}
+          count={pages}
+          onChange={(e, value) => setCurrentPage(value - 1)}
           sx={{
             mt: 8,
             [`& .${paginationClasses.ul}`]: {

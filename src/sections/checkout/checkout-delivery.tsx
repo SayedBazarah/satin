@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
@@ -6,6 +7,8 @@ import CardHeader from '@mui/material/CardHeader';
 import Card, { CardProps } from '@mui/material/Card';
 import ListItemText from '@mui/material/ListItemText';
 import Paper, { PaperProps } from '@mui/material/Paper';
+
+import { fCurrency } from 'src/utils/format-number';
 
 import Iconify from 'src/components/iconify';
 
@@ -21,9 +24,10 @@ type Props = CardProps & {
 export default function CheckoutDelivery({ options, onApplyShipping, ...other }: Props) {
   const { control } = useFormContext();
 
+  const t = useTranslations('checkout');
   return (
     <Card {...other}>
-      <CardHeader title="Delivery" />
+      <CardHeader title={t('delivery')} />
 
       <Controller
         name="delivery"
@@ -92,7 +96,7 @@ function OptionItem({ option, selected, ...other }: OptionItemProps) {
             <Box component="span" sx={{ flexGrow: 1 }}>
               {label}
             </Box>
-            <Box component="span" sx={{ typography: 'h6' }}>{`$${value}`}</Box>
+            <Box component="span" sx={{ typography: 'h6' }}>{`${fCurrency(value)}`}</Box>
           </Stack>
         }
         secondary={description}

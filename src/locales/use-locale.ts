@@ -1,47 +1,50 @@
 import { useCallback } from 'react';
+import { usePathname } from 'next/navigation';
+
 import { useSettingsContext } from 'src/components/settings';
-import { getStorage, setStorage } from 'src/hooks/use-local-storage';
-import { localStorageGetItem } from 'src/utils/storage-available';
+
+import { useRouter } from './navigation';
 
 export const allLangs = [
-  {
-    label: 'English',
-    value: 'en',
-    icon: 'flagpack:gb-nir',
-  },
-
   {
     label: 'Arabic',
     value: 'ar',
     icon: 'flagpack:eg',
   },
+  {
+    label: 'English',
+    value: 'en',
+    icon: 'flagpack:gb-nir',
+  },
 ];
 
-const NEXT_LOCALE = 'NEXT_LOCALE';
-
 export const useLocale = () => {
+  const router = useRouter();
+
+  const pathname = usePathname();
+
   const settings = useSettingsContext();
 
-  const locale = getStorage(NEXT_LOCALE);
+  const currentLang =
+    allLangs.find((lang) => lang.value === ((pathname.includes('en') && 'en') || 'ar')) ||
+    allLangs[0];
 
-  const currentLang = allLangs.find((lang) => lang.value === locale) || allLangs[0];
+  const changeLang = useCallback(
+    (newLang: string) => {
+      router.replace((currentLang.value === 'ar' && pathname) || pathname.replace('en/', ''), {
+        locale: newLang,
+      });
 
-  const changeLang = useCallback(() => {
-    const newLang = (currentLang.value === 'ar' && 'en') || 'ar';
+      // axios.defaults.headers.common.locale = newLang;
 
-    setStorage(NEXT_LOCALE, newLang);
-
-    settings.onChangeDirectionByLang(newLang);
-  }, [settings, setStorage]);
+      settings.onChangeDirectionByLang(newLang);
+    },
+    [currentLang.value, pathname, router, settings]
+  );
 
   return {
     currentLang,
     allLangs,
     changeLang,
   };
-};
-
-export const changeLange = () => {
-  const settings = useSettingsContext();
-  settings.onChangeDirectionByLang('en');
 };

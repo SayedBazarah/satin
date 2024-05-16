@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Stack, Container } from '@mui/material';
+import { Box, Stack, Container } from '@mui/material';
 
 import MainLayout from 'src/layouts/main';
 import { useGetLandingPage } from 'src/api/product';
@@ -9,12 +9,11 @@ import CartIcon from 'src/sections/shop/common/cart-icon';
 import { useCheckoutContext } from 'src/sections/checkout/context';
 
 import HomeHero from '../home-hero';
-import SectionTitle from '../section-title';
 import CategorySection from '../category-section';
 import ProductsScroller from '../products-scroller';
 
 export default function HomeView() {
-  const { categories, trendy } = useGetLandingPage();
+  const { categories } = useGetLandingPage();
 
   const checkout = useCheckoutContext();
 
@@ -22,18 +21,18 @@ export default function HomeView() {
     <MainLayout>
       <CartIcon totalItems={checkout.totalItems} />
       <Container>
-        <Stack spacing={6}>
+        <Stack spacing={4}>
           <HomeHero categories={categories} />
-          <Stack spacing={2}>
+          {/* <Stack>
             <SectionTitle title="Trendy Products" />
             <ProductsScroller products={trendy || []} />
-          </Stack>
+          </Stack> */}
           {categories &&
             categories.map((category, index) => (
-              <Container key={index}>
+              <Box key={index}>
                 <CategorySection coverImage={category.coverImage} href={category.slug} />
                 <ProductsScroller products={category.products} />
-              </Container>
+              </Box>
             ))}
         </Stack>
       </Container>

@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Button from '@mui/material/Button';
@@ -21,34 +22,27 @@ import CheckoutPaymentMethods from './checkout-payment-methods';
 
 // ----------------------------------------------------------------------
 
-const DELIVERY_OPTIONS: ICheckoutDeliveryOption[] = [
-  {
-    value: 0,
-    label: 'Free',
-    description: '24 Hours delivery',
-  },
-  {
-    value: 10,
-    label: 'Standard',
-    description: '3-6 Hours delivery',
-  },
-  {
-    value: 15,
-    label: 'Express',
-    description: '1 Hours delivery',
-  },
-];
-
-const PAYMENT_OPTIONS: ICheckoutPaymentOption[] = [
-  {
-    value: 'cash',
-    label: 'Cash',
-    description: 'Pay with cash when your order is delivered.',
-  },
-];
-
 export default function CheckoutPayment() {
   const checkout = useCheckoutContext();
+
+  const t = useTranslations('checkout');
+
+  const DELIVERY_OPTIONS: ICheckoutDeliveryOption[] = [
+    {
+      value: 50,
+      label: t('delivery-option.postal'),
+      description: t('delivery-option.postal-details'),
+    },
+  ];
+
+  const PAYMENT_OPTIONS: ICheckoutPaymentOption[] = [
+    {
+      value: 'cash',
+      label: t('cash'),
+      description: t('cash-delivery'),
+    },
+  ];
+
   const PaymentSchema = Yup.object().shape({
     payment: Yup.string().required('Payment is required'),
   });
@@ -101,7 +95,7 @@ export default function CheckoutPayment() {
             onClick={checkout.onBackStep}
             startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
           >
-            Back
+            {t('back')}
           </Button>
         </Grid>
 
@@ -123,7 +117,7 @@ export default function CheckoutPayment() {
             variant="contained"
             loading={isSubmitting}
           >
-            Complete Order
+            {t('complete')}
           </LoadingButton>
         </Grid>
       </Grid>
