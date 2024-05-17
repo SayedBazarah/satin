@@ -4,10 +4,6 @@ import axios, { endpoints } from 'src/utils/axios';
 
 import { ShopProductDetailsView } from 'src/sections/shop/view';
 
-export const metadata = {
-  title: 'Details',
-};
-
 export default function Page({ params }: { params: { slug: string } }) {
   return <ShopProductDetailsView slug={params.slug} />;
 }

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Paper from '@mui/material/Paper';
@@ -31,6 +33,8 @@ export default function ProductFiltersResult({
   results,
   ...other
 }: Props) {
+  const t = useTranslations('common');
+
   const handleRemoveGender = (inputValue: string) => {
     const newValue = filters.gender.filter((item) => item !== inputValue);
     onFilters('gender', newValue);
@@ -45,26 +49,31 @@ export default function ProductFiltersResult({
     onFilters('colors', newValue);
   };
 
+  const handleRemoveTag = () => {
+    onFilters('tag', 'all');
+  };
+
   const handleRemovePrice = () => {
-    onFilters('priceRange', [0, 200]);
+    onFilters('priceRange', [0, 2000]);
   };
 
   const handleRemoveRating = () => {
     onFilters('rating', '');
   };
-
+  console.log('results');
+  console.log(filters);
   return (
     <Stack spacing={1.5} {...other}>
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          results found
+          {t('results-found')}
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {!!filters.gender.length && (
-          <Block label="Gender:">
+          <Block label={t('gender')}>
             {filters.gender.map((item, index) => (
               <Chip
                 key={index}
@@ -77,13 +86,13 @@ export default function ProductFiltersResult({
         )}
 
         {filters.category !== 'all' && (
-          <Block label="Category:">
+          <Block label={t('category')}>
             <Chip size="small" label={filters.category} onDelete={handleRemoveCategory} />
           </Block>
         )}
 
         {!!filters.colors.length && (
-          <Block label="Colors:">
+          <Block label={t('color')}>
             {filters.colors.map((item, index) => (
               <Chip
                 key={index}
@@ -106,8 +115,14 @@ export default function ProductFiltersResult({
           </Block>
         )}
 
-        {(filters.priceRange[0] !== 0 || filters.priceRange[1] !== 200) && (
-          <Block label="Price:">
+        {filters.tag !== 'all' && (
+          <Block label={t('tag')}>
+            <Chip size="small" label={filters.tag} onDelete={() => handleRemoveTag()} />
+          </Block>
+        )}
+
+        {(filters.priceRange[0] !== 0 || filters.priceRange[1] !== 2000) && (
+          <Block label={t('price')}>
             <Chip
               size="small"
               label={`$${filters.priceRange[0]} - ${filters.priceRange[1]}`}
@@ -117,7 +132,7 @@ export default function ProductFiltersResult({
         )}
 
         {!!filters.rating && (
-          <Block label="Rating:">
+          <Block label={t('rating')}>
             <Chip size="small" label={filters.rating} onDelete={handleRemoveRating} />
           </Block>
         )}
@@ -128,7 +143,7 @@ export default function ProductFiltersResult({
             onClick={onResetFilters}
             startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
           >
-            Clear
+            {t('clear')}
           </Button>
         )}
       </Stack>

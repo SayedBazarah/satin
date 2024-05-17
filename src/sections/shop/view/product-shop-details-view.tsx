@@ -1,16 +1,15 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useState, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -32,23 +31,23 @@ import ProductDetailsDescription from '../product-details-description';
 
 // ----------------------------------------------------------------------
 
-const SUMMARY = [
-  {
-    title: '100% Original',
-    description: 'Chocolate bar candy canes ice cream toffee cookie halvah.',
-    icon: 'solar:verified-check-bold',
-  },
-  {
-    title: '10 Day Replacement',
-    description: 'Marshmallow biscuit donut dragée fruitcake wafer.',
-    icon: 'solar:clock-circle-bold',
-  },
-  {
-    title: 'Year Warranty',
-    description: 'Cotton candy gingerbread cake I love sugar sweet.',
-    icon: 'solar:shield-check-bold',
-  },
-];
+// const SUMMARY = [
+//   {
+//     title: '100% Original',
+//     description: 'Chocolate bar candy canes ice cream toffee cookie halvah.',
+//     icon: 'solar:verified-check-bold',
+//   },
+//   {
+//     title: '10 Day Replacement',
+//     description: 'Marshmallow biscuit donut dragée fruitcake wafer.',
+//     icon: 'solar:clock-circle-bold',
+//   },
+//   {
+//     title: 'Year Warranty',
+//     description: 'Cotton candy gingerbread cake I love sugar sweet.',
+//     icon: 'solar:shield-check-bold',
+//   },
+// ];
 
 // ----------------------------------------------------------------------
 
@@ -58,6 +57,8 @@ type Props = {
 
 export default function ProductShopDetailsView({ slug }: Props) {
   const settings = useSettingsContext();
+
+  const t = useTranslations('shop');
 
   const checkout = useCheckoutContext();
 
@@ -93,9 +94,9 @@ export default function ProductShopDetailsView({ slug }: Props) {
     <>
       <CustomBreadcrumbs
         links={[
-          { name: 'Home', href: '/' },
+          { name: t('home'), href: '/' },
           {
-            name: 'Shop',
+            name: t('root'),
             href: paths.product.root,
           },
           { name: product?.name },
@@ -119,7 +120,7 @@ export default function ProductShopDetailsView({ slug }: Props) {
         </Grid>
       </Grid>
 
-      <Box
+      {/* <Box
         gap={5}
         display="grid"
         gridTemplateColumns={{
@@ -141,7 +142,7 @@ export default function ProductShopDetailsView({ slug }: Props) {
             </Typography>
           </Box>
         ))}
-      </Box>
+      </Box> */}
 
       <Card>
         <Tabs
@@ -155,11 +156,11 @@ export default function ProductShopDetailsView({ slug }: Props) {
           {[
             {
               value: 'description',
-              label: 'Description',
+              label: t('description'),
             },
             {
               value: 'reviews',
-              label: `Reviews`,
+              label: t('reviews'),
               // label: `Reviews (${product.reviews.length})`,
             },
           ].map((tab) => (

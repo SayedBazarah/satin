@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
@@ -16,13 +18,14 @@ type Props = {
 };
 
 export default function CheckoutBillingInfo({ billing, onBackStep }: Props) {
+  const t = useTranslations('checkout');
   return (
     <Card sx={{ mb: 3 }}>
       <CardHeader
-        title="Address"
+        title={t('yup.address')}
         action={
           <Button size="small" startIcon={<Iconify icon="solar:pen-bold" />} onClick={onBackStep}>
-            Edit
+            {t('edit')}
           </Button>
         }
       />

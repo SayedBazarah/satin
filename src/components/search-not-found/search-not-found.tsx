@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Typography from '@mui/material/Typography';
 import Paper, { PaperProps } from '@mui/material/Paper';
 
@@ -8,6 +10,7 @@ interface Props extends PaperProps {
 }
 
 export default function SearchNotFound({ query, sx, ...other }: Props) {
+  const t = useTranslations('common');
   return query ? (
     <Paper
       sx={{
@@ -18,18 +21,18 @@ export default function SearchNotFound({ query, sx, ...other }: Props) {
       {...other}
     >
       <Typography variant="h6" gutterBottom>
-        Not Found
+        {t('not-found')}
       </Typography>
 
       <Typography variant="body2">
-        No results found for &nbsp;
+        {t('no-results')} &nbsp;
         <strong>&quot;{query}&quot;</strong>.
-        <br /> Try checking for typos or using complete words.
+        <br /> {t('try-check')}
       </Typography>
     </Paper>
   ) : (
     <Typography variant="body2" sx={sx}>
-      Please enter keywords
+      {t('enter-key')}
     </Typography>
   );
 }

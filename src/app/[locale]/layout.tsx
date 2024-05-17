@@ -3,6 +3,11 @@ import 'src/global.css';
 
 // ----------------------------------------------------------------------
 
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
+
+// ----------------------------------------------------------------------
+
 import ThemeProvider from 'src/theme';
 import { primaryFont } from 'src/theme/typography';
 
@@ -23,7 +28,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Minimal UI Kit',
+  title: 'Multisystem',
   description:
     'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
   keywords: 'react,material,kit,application,dashboard,admin,template',
@@ -38,35 +43,46 @@ export const metadata = {
 
 type Props = {
   children: React.ReactNode;
+  params: { locale: string };
 };
 
-export default function RootLayout({ children }: Props) {
+export default async function LocaleLayout({ children, params: { locale } }: Props) {
+  const messages = await getMessages();
+
   return (
-    <html lang="en" className={primaryFont.className}>
+    <html lang={locale} className={primaryFont.className}>
       <body>
         <AuthProvider>
-          <SettingsProvider
-            defaultSettings={{
-              themeMode: 'light', // 'light' | 'dark'
-              themeDirection: 'ltr', //  'rtl' | 'ltr'
-              themeContrast: 'default', // 'default' | 'bold'
-              themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-              themeStretch: false,
-            }}
-          >
-            <ThemeProvider>
-              <MotionLazy>
-                <CheckoutProvider>
-                  <SettingsDrawer />
-                  <ProgressBar />
-                  {children}
-                </CheckoutProvider>
-              </MotionLazy>
-            </ThemeProvider>
-          </SettingsProvider>
+          <NextIntlClientProvider messages={messages}>
+            <SettingsProvider
+              defaultSettings={{
+                themeMode: 'light', // 'light' | 'dark'
+                themeDirection: 'rtl', //  'rtl' | 'ltr'
+                themeContrast: 'default', // 'default' | 'bold'
+                themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+                themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+                themeStretch: false,
+              }}
+            >
+              <ThemeProvider>
+                <MotionLazy>
+                  <CheckoutProvider>
+                    <SettingsDrawer />
+                    <ProgressBar />
+                    {children}
+                  </CheckoutProvider>
+                </MotionLazy>
+              </ThemeProvider>
+            </SettingsProvider>
+          </NextIntlClientProvider>
         </AuthProvider>
       </body>
     </html>
   );
 }
+
+// const locales = ['en'];
+
+// export function generateStaticParams() {
+//   return locales.map((locale) => ({ locale }));
+// }

@@ -6,7 +6,6 @@ import { alpha, styled, useTheme } from '@mui/material/styles';
 import { bgGradient } from 'src/theme/css';
 
 import Image from 'src/components/image';
-import Lightbox, { useLightBox } from 'src/components/lightbox';
 import Carousel, { useCarousel, CarouselArrowIndex } from 'src/components/carousel';
 
 import { IProductItem } from 'src/types/product';
@@ -71,7 +70,6 @@ export default function ProductDetailsCarousel({ product }: Props) {
   const slides = product.images.map((img) => ({
     src: img,
   }));
-  const lightbox = useLightBox(slides);
 
   const carouselLarge = useCarousel({
     rtl: false,
@@ -94,12 +92,6 @@ export default function ProductDetailsCarousel({ product }: Props) {
     carouselThumb.onSetNav();
   }, [carouselLarge, carouselThumb]);
 
-  useEffect(() => {
-    if (lightbox.open) {
-      carouselLarge.onTogo(lightbox.selected);
-    }
-  }, [carouselLarge, lightbox.open, lightbox.selected]);
-
   const renderLargeImg = (
     <Box
       sx={{
@@ -107,6 +99,9 @@ export default function ProductDetailsCarousel({ product }: Props) {
         borderRadius: 2,
         overflow: 'hidden',
         position: 'relative',
+        '&:hover $image': {
+          transform: 'scale(1.1)', // Zoom effect
+        },
       }}
     >
       <Carousel
@@ -120,8 +115,11 @@ export default function ProductDetailsCarousel({ product }: Props) {
             alt={slide.src}
             src={slide.src}
             ratio="1/1"
-            onClick={() => lightbox.onOpen(slide.src)}
-            sx={{ cursor: 'zoom-in' }}
+            sx={{
+              transition: 'transform 0.3s ease',
+              width: '100%',
+              height: 'auto',
+            }}
           />
         ))}
       </Carousel>
@@ -177,14 +175,6 @@ export default function ProductDetailsCarousel({ product }: Props) {
       {renderLargeImg}
 
       {renderThumbnails}
-
-      <Lightbox
-        index={lightbox.selected}
-        slides={slides}
-        open={lightbox.open}
-        close={lightbox.onClose}
-        onGetCurrentIndex={(index) => lightbox.setSelected(index)}
-      />
     </Box>
   );
 }

@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 
 // import { PRODUCT_CHECKOUT_STEPS } from 'src/_mock/_product';
 
+import { useTranslations } from 'next-intl';
+
 import { useSettingsContext } from 'src/components/settings';
 
 import CheckoutCart from '../checkout-cart';
@@ -20,14 +22,16 @@ import CheckoutBillingAddress from '../checkout-billing-address';
 export default function CheckoutView() {
   const settings = useSettingsContext();
 
+  const t = useTranslations('checkout');
+
   const checkout = useCheckoutContext();
 
-  const PRODUCT_CHECKOUT_STEPS = ['Cart', 'Billing & address', 'Shipping'];
+  const PRODUCT_CHECKOUT_STEPS = [t('cart'), t('billing-address'), t('shipping')];
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'} sx={{ mb: 10 }}>
       <Typography variant="h4" sx={{ my: { xs: 3, md: 5 } }}>
-        Checkout
+        {t('root')}
       </Typography>
 
       <Grid container justifyContent={checkout.completed ? 'center' : 'flex-start'}>

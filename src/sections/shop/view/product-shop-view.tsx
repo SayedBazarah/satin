@@ -1,12 +1,10 @@
 'use client';
 
-import orderBy from 'lodash/orderBy';
 import isEqual from 'lodash/isEqual';
 import { useState, useCallback } from 'react';
 
 import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
 
@@ -21,7 +19,6 @@ import { useSettingsContext } from 'src/components/settings';
 import { IProductItem, IProductFilters, IProductFilterValue } from 'src/types/product';
 
 import ProductList from '../product-list';
-import ProductSort from '../product-sort';
 import CartIcon from '../common/cart-icon';
 import ProductSearch from '../product-search';
 import ProductFilters from '../product-filters';
@@ -41,18 +38,13 @@ const defaultFilters: IProductFilters = {
 // ----------------------------------------------------------------------
 
 export default function ProductShopView() {
-  const PRODUCT_SORT_OPTIONS: {
-    value: string;
-    label: string;
-  }[] = [];
-
   const settings = useSettingsContext();
 
   const checkout = useCheckoutContext();
 
   const openFilters = useBoolean();
 
-  const [sortBy, setSortBy] = useState('featured');
+  // const [sortBy] = useState('featured');
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -78,16 +70,15 @@ export default function ProductShopView() {
   const dataFiltered = applyFilter({
     inputData: products,
     filters,
-    sortBy,
   });
 
   const canReset = !isEqual(defaultFilters, filters);
 
   const notFound = !dataFiltered.length && canReset;
 
-  const handleSortBy = useCallback((newValue: string) => {
-    setSortBy(newValue);
-  }, []);
+  // const handleSortBy = useCallback((newValue: string) => {
+  //   setSortBy(newValue);
+  // }, []);
 
   const handleSearch = useCallback((inputValue: string) => {
     setSearchQuery(inputValue);
@@ -108,22 +99,18 @@ export default function ProductShopView() {
         hrefItem={(slug: string) => paths.product.details(slug)}
       />
 
-      <Stack direction="row" spacing={1} flexShrink={0}>
-        <ProductFilters
-          open={openFilters.value}
-          onOpen={openFilters.onTrue}
-          onClose={openFilters.onFalse}
-          //
-          filters={filters}
-          onFilters={handleFilters}
-          //
-          canReset={canReset}
-          onResetFilters={handleResetFilters}
-          ratingOptions={[]}
-        />
-
-        <ProductSort sort={sortBy} onSort={handleSortBy} sortOptions={PRODUCT_SORT_OPTIONS} />
-      </Stack>
+      <ProductFilters
+        open={openFilters.value}
+        onOpen={openFilters.onTrue}
+        onClose={openFilters.onFalse}
+        //
+        filters={filters}
+        onFilters={handleFilters}
+        //
+        canReset={canReset}
+        onResetFilters={handleResetFilters}
+        ratingOptions={[]}
+      />
     </Stack>
   );
 
@@ -150,20 +137,6 @@ export default function ProductShopView() {
     >
       <CartIcon totalItems={checkout.totalItems} />
 
-      <Typography
-        variant="h2"
-        textAlign="center"
-        sx={{
-          my: { xs: 3, md: 5 },
-          backgroundColor: 'primary.darker',
-          py: { xs: 5, md: 7 },
-          color: 'white',
-          borderRadius: 2,
-        }}
-      >
-        All Products
-      </Typography>
-
       <Stack
         spacing={2.5}
         sx={{
@@ -187,11 +160,9 @@ export default function ProductShopView() {
 function applyFilter({
   inputData,
   filters,
-  sortBy,
 }: {
   inputData: IProductItem[];
   filters: IProductFilters;
-  sortBy: string;
 }) {
   const { gender, category, tag, colors, priceRange, rating } = filters;
 
@@ -199,22 +170,22 @@ function applyFilter({
 
   const max = priceRange[1];
 
-  // SORT BY
-  if (sortBy === 'featured') {
-    inputData = orderBy(inputData, ['totalSold'], ['desc']);
-  }
+  // // SORT BY
+  // if (sortBy === 'featured') {
+  //   inputData = orderBy(inputData, ['totalSold'], ['desc']);
+  // }
 
-  if (sortBy === 'newest') {
-    inputData = orderBy(inputData, ['createdAt'], ['desc']);
-  }
+  // if (sortBy === 'newest') {
+  //   inputData = orderBy(inputData, ['createdAt'], ['desc']);
+  // }
 
-  if (sortBy === 'priceDesc') {
-    inputData = orderBy(inputData, ['price'], ['desc']);
-  }
+  // if (sortBy === 'priceDesc') {
+  //   inputData = orderBy(inputData, ['price'], ['desc']);
+  // }
 
-  if (sortBy === 'priceAsc') {
-    inputData = orderBy(inputData, ['price'], ['asc']);
-  }
+  // if (sortBy === 'priceAsc') {
+  //   inputData = orderBy(inputData, ['price'], ['asc']);
+  // }
 
   // FILTERS
   if (gender.length) {

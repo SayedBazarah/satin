@@ -1,0 +1,89 @@
+{
+  "common": {
+    "brand-description": "ecommerce platform, that meet the worldwide standard",
+
+    "search": "Search",
+    "filters": "Filters",
+    "sort": "Sort By",
+
+    "results-found": "results found",
+    "category": "Category",
+    "tag": "Tag:",
+    "price": "Price:",
+    "color": "Color:",
+    "gender": "Gender:",
+    "rating": "Rating:",
+
+    "max": "Max:",
+    "min": "Min:",
+
+    "enter-key": "Please enter keywords",
+    "not-found": "Not Found",
+    "no-results": "No results found for",
+    "try-check": "Try checking for typos or using complete words.",
+
+    "clear": "Clear"
+  },
+
+  "header": {
+    "home": "Home",
+    "shop": "Shop",
+    "categories": "Categories"
+  },
+  "shop": {
+    "root": "Shop",
+    "home": "Home",
+
+    "shop-all": "Shop All Products",
+    "shop-category": "Shop by Category",
+
+    "description": "Description",
+    "reviews": "Reviews",
+    "available": "Available",
+    "quantity": "Quantity",
+    "buy-now": "Buy Now",
+    "add-to-cart": "Add to Cart"
+  },
+  "checkout": {
+    "root": "Checkout",
+    "edit": "Edit",
+    "cart-empty": "Cart is Empty!",
+    "cart-empty-description": "Look like you have no items in your shopping cart.",
+    "cart": "Cart",
+    "item": "Item",
+    "billing-address": "Billing & address",
+    "shipping": "Shipping",
+    "order-summary": "Order Summary",
+    "subtotal": "Sub Total",
+    "discount": "Discount",
+    "total": "Total",
+    "checkout": "Check Out",
+    "vat": "VAT included if applicable",
+    "available": "Available",
+    "product": "Product",
+    "price": "Price",
+    "total-price": "Total Price",
+    "quantity": "Quantity",
+    "delivery": "Delivery",
+    "payment": "Payment",
+    "cash": "Cash",
+    "cash-delivery": "Pay with cash when your order is delivered.",
+    "continue-shopping": "Continue Shopping",
+    "complete": "Complete Order",
+    "back": "Back",
+    "delivery-option": {
+      "postal": "Postal",
+      "postal-details": "1 - 3 days"
+    },
+    "yup": {
+      "name": "Full Name",
+      "name-require": "Full Name is required",
+      "phone": "Phone",
+      "phone-require": "Phone is required",
+      "email": "Email",
+      "email-require": "Email is required",
+      "address": "Address",
+      "address-require": "Address is required"
+    }
+  }
+}

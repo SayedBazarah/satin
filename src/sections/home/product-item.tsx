@@ -5,9 +5,10 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 
 import { fCurrency } from 'src/utils/format-number';
+
+import { Link as RouterLink } from 'src/locales/navigation';
 
 import Label from 'src/components/label';
 import Image from 'src/components/image';
