@@ -7,7 +7,7 @@ import Link, { LinkProps } from '@mui/material/Link';
 import CardActionArea from '@mui/material/CardActionArea';
 import ListItemButton from '@mui/material/ListItemButton';
 
-import { RouterLink } from 'src/routes/components';
+import { Link as I18nLink } from 'src/locales/navigation';
 
 import Iconify from 'src/components/iconify';
 
@@ -46,7 +46,7 @@ export const NavItem = forwardRef<HTMLDivElement, NavItemProps>(
     }
 
     return (
-      <Link component={RouterLink} href={path} color="inherit" underline="none">
+      <Link component={I18nLink} href={path} color="inherit" underline="none">
         {renderContent}
       </Link>
     );
@@ -95,7 +95,7 @@ type NavItemDashboardProps = LinkProps & {
 
 export function NavItemDashboard({ path, sx, ...other }: NavItemDashboardProps) {
   return (
-    <Link component={RouterLink} href={path} sx={{ width: 1, height: 1 }} {...other}>
+    <Link component={I18nLink} href={path} sx={{ width: 1, height: 1 }} {...other}>
       <CardActionArea
         sx={{
           height: 1,

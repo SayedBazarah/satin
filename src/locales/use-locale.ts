@@ -31,7 +31,7 @@ export const useLocale = () => {
 
   const changeLang = useCallback(
     (newLang: string) => {
-      router.replace((currentLang.value === 'ar' && pathname) || pathname.replace('en/', ''), {
+      router.replace(pathname.replace(/en|ar/, ''), {
         locale: newLang,
       });
 
@@ -39,7 +39,7 @@ export const useLocale = () => {
 
       settings.onChangeDirectionByLang(newLang);
     },
-    [currentLang.value, pathname, router, settings]
+    [pathname, router, settings]
   );
 
   return {

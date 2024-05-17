@@ -5,9 +5,10 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 
 import { fCurrency } from 'src/utils/format-number';
+
+import { Link as I18nLink } from 'src/locales/navigation';
 
 import Label from 'src/components/label';
 import Image from 'src/components/image';
@@ -70,7 +71,7 @@ export default function ProductItem({ product }: Props) {
 
   const renderImg = (
     <Link
-      component={RouterLink}
+      component={I18nLink}
       href={paths.product.details(slug)}
       sx={{
         position: 'relative',
@@ -95,7 +96,7 @@ export default function ProductItem({ product }: Props) {
 
   const renderContent = (
     <Stack spacing={2.5} sx={{ p: 3, pt: 2 }}>
-      <Link component={RouterLink} href={linkTo} color="inherit" variant="subtitle2" noWrap>
+      <Link component={I18nLink} href={linkTo} color="inherit" variant="subtitle2" noWrap>
         {name}
       </Link>
 
