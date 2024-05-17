@@ -53,17 +53,17 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     <html lang={locale} className={primaryFont.className}>
       <body>
         <AuthProvider>
-          <SettingsProvider
-            defaultSettings={{
-              themeMode: 'light', // 'light' | 'dark'
-              themeDirection: 'rtl', //  'rtl' | 'ltr'
-              themeContrast: 'default', // 'default' | 'bold'
-              themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-              themeStretch: false,
-            }}
-          >
-            <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider messages={messages}>
+            <SettingsProvider
+              defaultSettings={{
+                themeMode: 'light', // 'light' | 'dark'
+                themeDirection: 'rtl', //  'rtl' | 'ltr'
+                themeContrast: 'default', // 'default' | 'bold'
+                themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+                themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+                themeStretch: false,
+              }}
+            >
               <ThemeProvider>
                 <MotionLazy>
                   <CheckoutProvider>
@@ -73,8 +73,8 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
                   </CheckoutProvider>
                 </MotionLazy>
               </ThemeProvider>
-            </NextIntlClientProvider>
-          </SettingsProvider>
+            </SettingsProvider>
+          </NextIntlClientProvider>
         </AuthProvider>
       </body>
     </html>

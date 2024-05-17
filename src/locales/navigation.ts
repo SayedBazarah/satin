@@ -1,7 +1,7 @@
 import { createSharedPathnamesNavigation } from 'next-intl/navigation';
 
 export const locales = ['ar', 'en'] as const;
-export const defaultLocale = locales[0];
+export const defaultLocale = 'ar';
 
 export const localePrefix = 'as-needed'; // Default
 
