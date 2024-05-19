@@ -1,11 +1,17 @@
 // ----------------------------------------------------------------------
 
+import { unstable_setRequestLocale } from 'next-intl/server';
+
 import { ShopView } from 'src/sections/shop/view';
 
 export const metadata = {
   title: 'Shop',
 };
 
-export default function Page() {
+type Props = {
+  params: { locale: string };
+};
+export default function Page({ params: { locale } }: Props) {
+  unstable_setRequestLocale(locale);
   return <ShopView />;
 }
