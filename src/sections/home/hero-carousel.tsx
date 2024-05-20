@@ -3,11 +3,11 @@ import { m as motion } from 'framer-motion';
 
 import { Box, Card, Paper, Stack, Button, Typography } from '@mui/material';
 
-import { RouterLink } from 'src/routes/components';
-
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { fCurrency } from 'src/utils/format-number';
+
+import { Link } from 'src/locales/navigation';
 
 import Label from 'src/components/label';
 import Image from 'src/components/image';
@@ -41,7 +41,7 @@ export default function HeroCarousel({ products }: Props) {
       <Carousel {...carouselLarge.carouselSettings} ref={carouselLarge.carouselRef}>
         {products.map((product, index) => (
           <Card
-            component={RouterLink}
+            component={Link}
             href={`/shop/${product.slug}`}
             sx={{ height: (md && 300) || 400, position: 'relative', textDecoration: 'none' }}
           >
@@ -79,7 +79,7 @@ const SliderItem = ({ product }: { product: IProductItem }) => (
         justifyContent: 'center',
         alignItems: 'center',
       }}
-     />
+    />
     <Paper
       sx={{
         position: 'absolute',

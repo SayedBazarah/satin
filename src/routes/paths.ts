@@ -19,6 +19,10 @@ export const paths = {
     root: `/tags`,
     single: (id: string) => `/tags/${id}`,
   },
+  category: {
+    root: `/categories`,
+    single: (id: string) => `/categories/${id}`,
+  },
 
   // AUTH
   auth: {

@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack, { StackProps } from '@mui/material/Stack';
 
-import { RouterLink } from 'src/routes/components';
+import { Link } from 'src/locales/navigation';
 
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
@@ -49,7 +49,7 @@ export default function ProductDetailsToolbar({
         {...other}
       >
         <Button
-          component={RouterLink}
+          component={Link}
           href={backLink}
           startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
         >
@@ -60,14 +60,14 @@ export default function ProductDetailsToolbar({
 
         {publish === 'published' && (
           <Tooltip title="Go Live">
-            <IconButton component={RouterLink} href={liveLink}>
+            <IconButton component={Link} href={liveLink}>
               <Iconify icon="eva:external-link-fill" />
             </IconButton>
           </Tooltip>
         )}
 
         <Tooltip title="Edit">
-          <IconButton component={RouterLink} href={editLink}>
+          <IconButton component={Link} href={editLink}>
             <Iconify icon="solar:pen-bold" />
           </IconButton>
         </Tooltip>

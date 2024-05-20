@@ -2,9 +2,9 @@ import { LazyMotion, m as motion, domAnimation } from 'framer-motion';
 
 import { Box, Grid, Paper, Stack } from '@mui/material';
 
-import { RouterLink } from 'src/routes/components';
-
 import { useResponsive } from 'src/hooks/use-responsive';
+
+import { Link } from 'src/locales/navigation';
 
 import Image from 'src/components/image';
 
@@ -47,7 +47,7 @@ function RenderTags({ tags }: { tags: { slug: string; coverImage: string }[] }) 
             <Box
               key={index}
               sx={{ position: 'relative' }}
-              component={RouterLink}
+              component={Link}
               href={`/categories/${item.slug}`}
             >
               <Image

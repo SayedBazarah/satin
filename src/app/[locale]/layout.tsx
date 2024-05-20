@@ -28,10 +28,10 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Multisystem',
+  title: 'Satin Store',
   description:
-    'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
-  keywords: 'react,material,kit,application,dashboard,admin,template',
+    'Wrap yourself in luxury with our premium satin products. Indulge in the softness and shine that only satin can provide',
+  keywords: 'satin,hair,body,beauty',
   manifest: '/manifest.json',
   icons: [
     { rel: 'icon', url: '/favicon/favicon.ico' },

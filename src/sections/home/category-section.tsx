@@ -2,9 +2,11 @@ import React from 'react';
 
 import { Box, Grid, Stack, Typography } from '@mui/material';
 
-import { RouterLink } from 'src/routes/components';
+import { paths } from 'src/routes/paths';
 
 import { useResponsive } from 'src/hooks/use-responsive';
+
+import { Link } from 'src/locales/navigation';
 
 import Image from 'src/components/image';
 
@@ -20,11 +22,11 @@ type Props = {
 };
 export default function CategorySection({ title, href, coverImage = '', products = [] }: Props) {
   const md = useResponsive('up', 'md');
-
+  const categoryLink = paths.category.single(href || '');
   return (
     <Box
-      component={RouterLink}
-      href={(href && href) || ''}
+      component={Link}
+      href={categoryLink}
       sx={{
         textDecoration: 'none',
         bgcolor: '#000',
