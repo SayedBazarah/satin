@@ -12,8 +12,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { paths } from 'src/routes/paths';
-import { Link } from 'src/locales/navigation';
 
+import { Link } from 'src/locales/navigation';
 import { useGetProduct } from 'src/api/product';
 
 import Iconify from 'src/components/iconify';

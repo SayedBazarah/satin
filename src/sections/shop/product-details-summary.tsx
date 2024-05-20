@@ -13,6 +13,8 @@ import { paths } from 'src/routes/paths';
 
 import { fCurrency, fShortenNumber } from 'src/utils/format-number';
 
+import { useRouter } from 'src/locales/navigation';
+
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import FormProvider from 'src/components/hook-form';
@@ -21,7 +23,6 @@ import { IProductItem } from 'src/types/product';
 import { ICheckoutItem } from 'src/types/checkout';
 
 import IncrementerButton from './common/incrementer-button';
-import { useRouter } from 'src/locales/navigation';
 
 // ----------------------------------------------------------------------
 

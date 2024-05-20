@@ -6,6 +6,7 @@ import { alpha, styled } from '@mui/material/styles';
 import ListItemButton from '@mui/material/ListItemButton';
 
 import { Link as I18nLink } from 'src/locales/navigation';
+
 import Iconify from 'src/components/iconify';
 
 import { NavItemProps, NavItemStateProps } from '../types';
