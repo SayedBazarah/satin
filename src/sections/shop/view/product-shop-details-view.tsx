@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import { Link } from 'src/locales/navigation';
 
 import { useGetProduct } from 'src/api/product';
 
@@ -78,7 +78,7 @@ export default function ProductShopDetailsView({ slug }: Props) {
       title={`${productError?.message}`}
       action={
         <Button
-          component={RouterLink}
+          component={Link}
           href={paths.product.root}
           startIcon={<Iconify icon="eva:arrow-ios-back-fill" width={16} />}
           sx={{ mt: 3 }}

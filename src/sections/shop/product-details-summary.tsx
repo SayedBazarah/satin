@@ -10,7 +10,6 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 
 import { fCurrency, fShortenNumber } from 'src/utils/format-number';
 
@@ -22,6 +21,7 @@ import { IProductItem } from 'src/types/product';
 import { ICheckoutItem } from 'src/types/checkout';
 
 import IncrementerButton from './common/incrementer-button';
+import { useRouter } from 'src/locales/navigation';
 
 // ----------------------------------------------------------------------
 
