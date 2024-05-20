@@ -97,28 +97,21 @@ export default function ProductItem({ product }: Props) {
           <Iconify icon="solar:cart-plus-bold" width={24} />
         </Fab>
       )}
-      <Link
-        component={I18nLink}
-        href={paths.product.details(slug)}
-        sx={{
-          position: 'relative',
-        }}
-      >
-        <Tooltip title={!available && 'Out of stock'} placement="bottom-end">
-          <Image
-            alt={name}
-            src={coverUrl}
-            ratio="1/1"
-            sx={{
-              borderRadius: 1.5,
-              ...(!available && {
-                opacity: 0.48,
-                filter: 'grayscale(1)',
-              }),
-            }}
-          />
-        </Tooltip>
-      </Link>
+
+      <Tooltip title={!available && 'Out of stock'} placement="bottom-end">
+        <Image
+          alt={name}
+          src={coverUrl}
+          ratio="1/1"
+          sx={{
+            borderRadius: 1.5,
+            ...(!available && {
+              opacity: 0.48,
+              filter: 'grayscale(1)',
+            }),
+          }}
+        />
+      </Tooltip>
     </Box>
   );
 
