@@ -131,13 +131,14 @@ export default function ProductItem({ product }: Props) {
       <Stack direction="row" alignItems="center" justifyContent="space-between">
         {colors && <ColorPreview colors={colors} />}
         <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
-          {priceSale !== 0 && (
-            <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
-              {fCurrency(priceSale)}
-            </Box>
-          )}
-
-          <Box component="span">{fCurrency(price)}</Box>
+          {(priceSale !== 0 && (
+            <>
+              <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
+                {fCurrency(price)}
+              </Box>
+              <Box component="span">{fCurrency(priceSale)}</Box>
+            </>
+          )) || <Box component="span">{fCurrency(price)}</Box>}
         </Stack>
       </Stack>
     </Stack>
