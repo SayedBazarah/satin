@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Box, Grid, Stack, Typography } from '@mui/material';
 
+import { paths } from 'src/routes/paths';
+
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { Link } from 'src/locales/navigation';
@@ -11,7 +13,6 @@ import Image from 'src/components/image';
 import { IProductItem } from 'src/types/product';
 
 import ProductItem from './product-item';
-import { paths } from 'src/routes/paths';
 
 type Props = {
   products?: IProductItem[];
