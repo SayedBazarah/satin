@@ -211,7 +211,7 @@ export default function ProductDetailsSummary({
         fullWidth
         disabled={isMaxQuantity || disabledActions}
         size="large"
-        color="warning"
+        color="primary"
         variant="contained"
         startIcon={<Iconify icon="solar:cart-plus-bold" width={24} />}
         onClick={handleAddCart}
