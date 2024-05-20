@@ -11,6 +11,7 @@ import Image from 'src/components/image';
 import { IProductItem } from 'src/types/product';
 
 import ProductItem from './product-item';
+import { paths } from 'src/routes/paths';
 
 type Props = {
   products?: IProductItem[];
@@ -20,11 +21,11 @@ type Props = {
 };
 export default function CategorySection({ title, href, coverImage = '', products = [] }: Props) {
   const md = useResponsive('up', 'md');
-
+  const categoryLink = paths.category.single(href || '');
   return (
     <Box
       component={Link}
-      href={(href && href) || ''}
+      href={categoryLink}
       sx={{
         textDecoration: 'none',
         bgcolor: '#000',
