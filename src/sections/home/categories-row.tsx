@@ -36,7 +36,11 @@ export default function Categories({ categories }: Props) {
 
 function CategoryItem({ category }: { category: ICategory }) {
   return (
-    <Box component={Link} href={paths.category.single(category.slug)}>
+    <Box
+      component={Link}
+      href={paths.category.single(category.slug)}
+      sx={{ textDecoration: 'none' }}
+    >
       <Stack
         sx={{
           alignItems: 'center',
