@@ -15,7 +15,7 @@ import ProductsScroller from '../products-scroller';
 import HeroTextOverImage from '../hero-text-over-image';
 
 export default function HomeView() {
-  const { categories, bestSelling } = useGetLandingPage();
+  const { categories, bestSelling, newProduct } = useGetLandingPage();
 
   const t = useTranslations('landing');
 
@@ -48,7 +48,7 @@ export default function HomeView() {
               </>
             }
           />
-          <ProductsScroller products={bestSelling} title={t('new-products')} />
+          <ProductsScroller products={newProduct} title={t('new-products')} />
           <ProductsScroller products={bestSelling} title={t('best-selling')} />
           <ContactForm />
         </Stack>

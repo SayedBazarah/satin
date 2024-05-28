@@ -56,7 +56,7 @@ export default function ContactForm() {
           <Typography variant="caption">{t('trusted')}</Typography>
         </Grid>
         <Grid item xs={12} md={6} sx={{ backgroundColor: 'white', p: 3, borderRadius: '32px' }}>
-          {!isError && (
+          {isError && (
             <Typography my={2} textAlign="center" color="error.main">
               {t('yup.error')}
             </Typography>

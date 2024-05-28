@@ -7,6 +7,8 @@ import Typography from '@mui/material/Typography';
 import Image from 'src/components/image/image';
 
 import { ICategory } from 'src/types/product';
+import { Link } from 'src/locales/navigation';
+import { paths } from 'src/routes/paths';
 
 type Props = {
   categories: ICategory[];
@@ -34,20 +36,22 @@ export default function Categories({ categories }: Props) {
 
 function CategoryItem({ category }: { category: ICategory }) {
   return (
-    <Stack
-      sx={{
-        alignItems: 'center',
-        textAlign: 'center',
-      }}
-    >
-      {(category.icon && (
-        <Box
-          component={Image}
-          src={category.icon}
-          sx={{ width: '156px', height: '156px', borderRadius: '8px' }}
-        />
-      )) || <Avatar title={category.title} />}
-      <Typography>{category.title}</Typography>
-    </Stack>
+    <Box component={Link} href={paths.category.single(category.slug)}>
+      <Stack
+        sx={{
+          alignItems: 'center',
+          textAlign: 'center',
+        }}
+      >
+        {(category.icon && (
+          <Box
+            component={Image}
+            src={category.icon}
+            sx={{ width: '156px', height: '156px', borderRadius: '8px' }}
+          />
+        )) || <Avatar title={category.title} />}
+        <Typography>{category.title}</Typography>
+      </Stack>
+    </Box>
   );
 }
