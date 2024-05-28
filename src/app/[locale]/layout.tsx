@@ -13,7 +13,7 @@ import { primaryFont } from 'src/theme/typography';
 
 import ProgressBar from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
-import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
+import { SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
 import { CheckoutProvider } from 'src/sections/checkout/context';
@@ -48,6 +48,7 @@ type Props = {
 
 export default async function LocaleLayout({ children, params: { locale } }: Props) {
   unstable_setRequestLocale(locale);
+
   const messages = await getMessages();
 
   return (
@@ -68,7 +69,6 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
               <ThemeProvider>
                 <MotionLazy>
                   <CheckoutProvider>
-                    <SettingsDrawer />
                     <ProgressBar />
                     {children}
                   </CheckoutProvider>

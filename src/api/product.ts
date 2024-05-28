@@ -65,16 +65,17 @@ export function useGetCategories() {
 
 export function useGetLandingPage() {
   const { data, isLoading, error, isValidating } = useSWR(endpoints.landing, fetcher);
+
   const memoizedValue = useMemo(
     () => ({
       categories: (data?.categories as ICategory[]) || [],
-      carsoul: (data?.carsoul as IProductItem[]) || [],
-      trendy: (data?.trendy as IProductItem[]) || [],
+      newProduct: (data?.newProduct as IProductItem[]) || [],
+      bestSelling: (data?.bestSelling as IProductItem[]) || [],
       isLoading,
       isError: error,
       isValidating,
     }),
-    [data?.categories, data?.trendy, data?.carsoul, error, isLoading, isValidating]
+    [data?.categories, data?.bestSelling, data?.newProduct, error, isLoading, isValidating]
   );
 
   return memoizedValue;

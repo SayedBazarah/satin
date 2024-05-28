@@ -1,1 +1,2 @@
-export { default as HomeView } from './home-view';
+export { default as HomeView } from './default-view';
+export { default as SatinStoreView } from './satin-store';

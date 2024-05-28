@@ -1,11 +1,12 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
+import { usePathname } from 'next/navigation';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
 import { useLocalStorage } from 'src/hooks/use-local-storage';
 
-import { localStorageGetItem } from 'src/utils/storage-available';
+import axios from 'src/utils/axios';
 
 import { SettingsValueProps } from '../types';
 import { SettingsContext } from './settings-context';
@@ -20,15 +21,16 @@ type SettingsProviderProps = {
 };
 
 export function SettingsProvider({ children, defaultSettings }: SettingsProviderProps) {
+  const pathname = usePathname();
+
   const { state, update, reset } = useLocalStorage(STORAGE_KEY, defaultSettings);
 
   const [openDrawer, setOpenDrawer] = useState(false);
-
-  const isArabic = localStorageGetItem('i18nextLng') === 'ar';
-
+  const isArabic = pathname.includes('ar');
   useEffect(() => {
     if (isArabic) {
       onChangeDirectionByLang('ar');
+      axios.defaults.headers['Accept-Language'] = 'ar';
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isArabic]);

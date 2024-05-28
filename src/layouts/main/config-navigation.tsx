@@ -25,6 +25,11 @@ export const NavConfig = () => {
       path: paths.categories,
       icon: <Iconify icon="solar:file-bold-duotone" />,
     },
+    {
+      title: t('wholesale'),
+      path: paths.wholesale,
+      icon: <Iconify icon="solar:file-bold-duotone" />,
+    },
 
     // {
     //   title: 'Tags',

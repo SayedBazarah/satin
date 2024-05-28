@@ -21,19 +21,15 @@ export default function HomeView() {
 
   return (
     <MainLayout>
-      <CartIcon totalItems={checkout.totalItems} />
       <Container>
+        <CartIcon totalItems={checkout.totalItems} />
         <Stack spacing={4}>
           <HomeHero categories={categories} />
-          {/* <Stack>
-            <SectionTitle title="Trendy Products" />
-            <ProductsScroller products={trendy || []} />
-          </Stack> */}
           {categories &&
             categories.map((category, index) => (
               <Box key={index}>
                 <CategorySection coverImage={category.coverImage} href={category.slug} />
-                <ProductsScroller products={category.products} />
+                <ProductsScroller title="" products={category.products} />
               </Box>
             ))}
         </Stack>

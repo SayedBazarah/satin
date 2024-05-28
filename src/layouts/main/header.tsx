@@ -13,9 +13,12 @@ import { bgBlur } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
 
+import { useCheckoutContext } from 'src/sections/checkout/context';
+
 import NavMobile from './nav/mobile';
 import NavDesktop from './nav/desktop';
 import { HEADER } from '../config-layout';
+import CartButton from '../common/cart-button';
 import { NavConfig } from './config-navigation';
 import HeaderShadow from '../common/header-shadow';
 import LanguagePopover from '../common/language-popover';
@@ -28,6 +31,8 @@ export default function Header() {
   const mdUp = useResponsive('up', 'md');
 
   const offsetTop = useOffSetTop(HEADER.H_DESKTOP);
+
+  const checkout = useCheckoutContext();
 
   return (
     <AppBar>
@@ -61,7 +66,9 @@ export default function Header() {
 
           {mdUp && <NavDesktop data={NavConfig()} />}
 
+          <CartButton totalItems={checkout.totalItems} />
           <LanguagePopover />
+
           <Stack alignItems="center" direction={{ xs: 'row', md: 'row-reverse' }}>
             {!mdUp && <NavMobile data={NavConfig()} />}
           </Stack>

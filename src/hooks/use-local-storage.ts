@@ -61,8 +61,6 @@ export const getStorage = (key: string) => {
 
   try {
     const result = window.localStorage.getItem(key);
-    console.log('result');
-    console.log(result);
     if (result) {
       value = JSON.parse(result);
     }
@@ -87,4 +85,8 @@ export const removeStorage = (key: string) => {
   } catch (error) {
     console.error(error);
   }
+};
+
+export const defaultStorageItems = {
+  LOCATION: 'Location',
 };

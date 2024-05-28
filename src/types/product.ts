@@ -37,6 +37,7 @@ export type ICategory = {
   title: string;
   slug: string;
   coverImage: string;
+  icon: string;
   products: IProductItem[];
 };
 export type IProductItem = {

@@ -1,3 +1,4 @@
+
 import Box from '@mui/material/Box';
 import { Fab } from '@mui/material';
 import Link from '@mui/material/Link';
@@ -48,7 +49,6 @@ export default function ProductItem({ product, ...props }: Props) {
       console.error(error);
     }
   };
-
   const renderLabels = (newLabel.enabled || saleLabel.enabled) && (
     <Stack
       direction="row"
@@ -111,31 +111,30 @@ export default function ProductItem({ product, ...props }: Props) {
   );
 
   const renderContent = (
-    <Stack spacing={2.5} sx={{ p: 3, pt: 2 }}>
-      <Link component={I18nLink} href={linkTo} color="inherit" variant="subtitle2" noWrap>
+    <Stack spacing={2.5} sx={{ p: 3, pt: 2, textAlign: 'left' }}>
+      <Link component={I18nLink} href={linkTo} color="inherit" variant="subtitle2">
         {name}
       </Link>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
+      {(priceSale !== 0 && (
         <Stack direction="row" spacing={0.5} sx={{ typography: 'subtitle1' }}>
-          {(priceSale !== 0 && (
-            <>
-              <Box component="span" sx={{ color: 'text.disabled', textDecoration: 'line-through' }}>
-                {fCurrency(price)}
-              </Box>
-              <Box component="span">{fCurrency(priceSale)}</Box>
-            </>
-          )) || <Box component="span">{fCurrency(price)}</Box>}
+          <Box
+            component="span"
+            sx={{ width: '100%', color: 'text.disabled', textDecoration: 'line-through' }}
+          >
+            {fCurrency(price)}
+          </Box>
+          <Box component="span">{fCurrency(priceSale)}</Box>
         </Stack>
-      </Stack>
+      )) || <Box component="span">{fCurrency(price)}</Box>}
     </Stack>
   );
 
   return (
     <Card
       sx={{
-        mx: '5px',
-        mb: 2,
+        my: 2,
+        mr: 1,
         '&:hover .add-cart-btn': {
           opacity: 1,
         },

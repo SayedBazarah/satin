@@ -14,6 +14,7 @@ export const paths = {
   contact: `/contact`,
   faqs: `/faqs`,
   shop: `/shop`,
+  wholesale: `/wholesale`,
   categories: `/categories`,
   tag: {
     root: `/tags`,

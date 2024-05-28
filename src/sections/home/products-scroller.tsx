@@ -1,7 +1,8 @@
 import React from 'react';
 import { m as motion } from 'framer-motion';
 
-import { Box, Stack } from '@mui/material';
+import { Box } from '@mui/material';
+import Stack from '@mui/material/Stack';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
@@ -13,9 +14,10 @@ import ProductItem from './product-item';
 
 type Props = {
   products: IProductItem[];
+  title: string;
 };
 
-export default function ProductsScroller({ products }: Props) {
+export default function ProductsScroller({ title, products }: Props) {
   const md = useResponsive('up', 'md');
 
   const carousel = useCarousel({
@@ -28,17 +30,45 @@ export default function ProductsScroller({ products }: Props) {
 
   return (
     <Stack>
+      <Box
+        fontWeight="200"
+        display="flex"
+        gap="5px"
+        position="relative"
+        fontSize={{ xs: 32, md: 38 }}
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          color: 'primary.main',
+        }}
+      >
+        <Box fontWeight="700">{title.split(' ')[0]}</Box>
+        {title.split(' ').splice(1).join(' ')}
+        <Box
+          sx={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 10,
+            zIndex: -1,
+          }}
+        >
+          <Box sx={{ height: '20px', width: '200px', backgroundColor: 'primary.lighter' }} />
+        </Box>
+      </Box>
       <motion.div
         initial={{ x: '-100vw' }}
         animate={{ x: 0 }}
         transition={{ type: 'keyframes', stiffness: 50, duration: 1 }}
       >
-        <Box>
-          <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
-            {products.length > 1 &&
-              products.map((product, index) => <ProductItem key={index} product={product} />)}
-          </Carousel>
-        </Box>
+        {products.length > 1 &&
+          ((
+            <Carousel ref={carousel.carouselRef} {...carousel.carouselSettings}>
+              {products.map((product, index) => (
+                <ProductItem key={index} product={product} />
+              ))}
+            </Carousel>
+          ) || <ProductItem product={products[0]} />)}
       </motion.div>
     </Stack>
   );

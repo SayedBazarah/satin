@@ -1,4 +1,44 @@
 {
+  "landing": {
+    "title": "Luxury Satin Products",
+    "sub-title": "Experience unparalleled comfort and timeless elegance with our luxury satin products, designed to enhance your beauty and elevate your lifestyle",
+    "shop-now": "Shop Now",
+    "wholesale": "Wholesale",
+    "trusted": " TRUSTED FROM 10000+ CUSTOMER",
+    "categories-view-title": " Bunch of Luxury Products",
+    "join": "Join Suger Distributors",
+    "partner": "Are you ready to sell luxury satin products?",
+    "best-selling": "BEST SELLING",
+    "new-products": "NEW PRODUCTS",
+    "satin-brief": {
+      "title": "What is a benefits of using satin products?",
+      "brief-1": "Satin products offer numerous benefits, particularly for hair and skin health, comfort, and aesthetics. They help reduce frizz and breakage, maintain moisture, and minimize wrinkles due to their smooth texture and low friction properties.",
+      "brief-2": "Satin also supports skin hydration, provides a luxurious and comfortable feel, aids in temperature regulation, and has hypoallergenic qualities, making it suitable for sensitive skin. Additionally, the elegant appearance of satin adds a touch of sophistication to any setting.",
+      "brief-3": "Overall, incorporating satin products into your daily routine can enhance your well-being and add a luxurious touch to your lifestyle."
+    },
+    "brand-brief": {
+      "title": "Who is Sugar satin store?",
+      "brief-1": "After struggling for years to find curl care that addressed the needs of her curl pattern and texture, Sugar set out to create a line that could. One that not only catered to the diversity of curl babes everywhere but empowered them to love their curls just the way they are.",
+      "brief-2": "Satin Store is a premier retail destination specializing in high-quality satin products. Renowned for its commitment to luxury and elegance, Sugar Satin Store offers a curated collection of satin garments, bedding, and accessories.",
+      "brief-3": "Sugar set provide you with the latest technologies to care your hair and body"
+    },
+    "yup": {
+      "error": "error: please try later or try to connect using social media",
+      "sucess": "The message has been successfully sent, we will contact you as soon as possible",
+      "name": "Full Name",
+      "name-require": "Full Name is required",
+      "phone": "Phone",
+      "phone-require": "Phone is required",
+      "email": "Email",
+      "email-require": "Email is required",
+      "address": "Address",
+      "address-require": "Address is required",
+      "message": "Message",
+      "message-require": "Write your inquiry",
+      "submit": "Submit",
+      "business-name": "Business Name"
+    }
+  },
   "common": {
     "brand-description": "ecommerce platform, that meet the worldwide standard",
 
@@ -27,6 +67,7 @@
 
   "header": {
     "home": "Home",
+    "wholesale": "Wholesale",
     "shop": "Shop",
     "categories": "Categories"
   },

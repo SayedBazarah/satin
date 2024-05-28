@@ -8,6 +8,7 @@ const axiosInstance = axios.create({
   baseURL: HOST_API,
   headers: {
     authorization: 'CLIENT',
+    'accept-language': 'en',
   },
 });
 
@@ -31,20 +32,12 @@ export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
 // ----------------------------------------------------------------------
 
 export const endpoints = {
-  chat: '/api/chat',
-  kanban: '/api/kanban',
-  calendar: '/api/calendar',
   auth: {
     me: '/api/auth/me',
     login: '/api/auth/login',
     register: '/api/auth/register',
     forgot_password: '/api/auth/register',
     check_token: '/api/auth/register',
-  },
-  mail: {
-    list: '/api/mail/list',
-    details: '/api/mail/details',
-    labels: '/api/mail/labels',
   },
   post: {
     list: '/api/post/list',
@@ -66,5 +59,6 @@ export const endpoints = {
     list: '/api/category',
     details: (slug: string) => `/api/category/${slug}`,
   },
-  landing: '/api/general/landing-page',
+  landing: '/api/common/landing-page',
+  wholesale: `/api/common/wholesale`,
 };

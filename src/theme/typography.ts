@@ -32,7 +32,7 @@ declare module '@mui/material/styles' {
 }
 
 export const primaryFont = Public_Sans({
-  weight: ['400', '500', '600', '700', '800', '900'],
+  weight: ['200', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],

@@ -1,5 +1,7 @@
 // import { useLocales as getLocales } from 'src/locales';
 
+import { useLocale as getLocale } from 'src/locales/use-locale';
+
 // ----------------------------------------------------------------------
 
 /*
@@ -9,11 +11,16 @@
 
 type InputValue = string | number | null;
 
-function getLocaleCode() {
-  return {
-    code: 'ar-EG',
-    currency: 'EGP',
-  };
+function getLocaleCode(locale?: string) {
+  return (
+    (locale === 'ar' && {
+      code: 'ar-EG',
+      currency: 'EGP',
+    }) || {
+      code: 'en-EG',
+      currency: 'EGP',
+    }
+  );
 }
 
 // ----------------------------------------------------------------------
@@ -35,8 +42,10 @@ export function fNumber(inputValue: InputValue) {
 
 // ----------------------------------------------------------------------
 
-export function fCurrency(inputValue: InputValue) {
-  const { code, currency } = getLocaleCode();
+export const fCurrency = (inputValue: InputValue) => {
+  const { currentLang } = getLocale();
+
+  const { code, currency } = getLocaleCode(currentLang.value);
 
   if (!inputValue) return '';
 
@@ -50,7 +59,7 @@ export function fCurrency(inputValue: InputValue) {
   }).format(number);
 
   return fm;
-}
+};
 
 // ----------------------------------------------------------------------
 

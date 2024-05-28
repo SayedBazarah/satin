@@ -1,20 +1,26 @@
 import { useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 
+import axios from 'src/utils/axios';
+
 import { useSettingsContext } from 'src/components/settings';
 
 import { useRouter } from './navigation';
 
 export const allLangs = [
   {
-    label: 'Arabic',
+    label: 'اللغة العربية',
     value: 'ar',
     icon: 'flagpack:eg',
+    code: 'ar-EG',
+    currency: 'EGP',
   },
   {
     label: 'English',
     value: 'en',
     icon: 'flagpack:gb-nir',
+    code: 'en-EG',
+    currency: 'EGP',
   },
 ];
 
@@ -35,7 +41,7 @@ export const useLocale = () => {
         locale: newLang,
       });
 
-      // axios.defaults.headers.common.locale = newLang;
+      axios.defaults.headers['Accept-Language'] = newLang;
 
       settings.onChangeDirectionByLang(newLang);
     },
