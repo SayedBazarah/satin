@@ -39,7 +39,7 @@ function CategoryItem({ category }: { category: ICategory }) {
     <Box
       component={Link}
       href={paths.category.single(category.slug)}
-      sx={{ textDecoration: 'none' }}
+      sx={{ textDecoration: 'none', color: 'GrayText' }}
     >
       <Stack
         sx={{
