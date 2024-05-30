@@ -4,11 +4,13 @@ import Stack from '@mui/material/Stack';
 import { Box, Avatar } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
+import { paths } from 'src/routes/paths';
+
+import { Link } from 'src/locales/navigation';
+
 import Image from 'src/components/image/image';
 
 import { ICategory } from 'src/types/product';
-import { Link } from 'src/locales/navigation';
-import { paths } from 'src/routes/paths';
 
 type Props = {
   categories: ICategory[];

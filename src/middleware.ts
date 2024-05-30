@@ -34,7 +34,7 @@ export default async function middleware(request: NextRequest) {
   });
 
   // accept-lanuage will override the defaultLocale, so remove it.
-  request.headers.set('accept-language', '');
+  request.headers.set('accept-language', 'en');
   const response = handleI18nRouting(request);
 
   return response;
