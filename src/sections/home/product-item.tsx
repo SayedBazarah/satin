@@ -1,4 +1,3 @@
-
 import Box from '@mui/material/Box';
 import { Fab } from '@mui/material';
 import Link from '@mui/material/Link';
@@ -111,8 +110,14 @@ export default function ProductItem({ product, ...props }: Props) {
   );
 
   const renderContent = (
-    <Stack spacing={2.5} sx={{ p: 3, pt: 2, textAlign: 'left' }}>
-      <Link component={I18nLink} href={linkTo} color="inherit" variant="subtitle2">
+    <Stack spacing={2.5} p={{ xs: 0, md: 2 }} sx={{ p: 3, pt: 2, textAlign: 'left' }}>
+      <Link
+        component={I18nLink}
+        href={linkTo}
+        color="inherit"
+        variant="subtitle2"
+        sx={{ textWrap: 'nowrap', textAlign: 'right' }}
+      >
         {name}
       </Link>
 

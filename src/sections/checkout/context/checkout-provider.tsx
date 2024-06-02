@@ -3,9 +3,10 @@
 import { useMemo, useEffect, useCallback } from 'react';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 
 import { getStorage, useLocalStorage } from 'src/hooks/use-local-storage';
+
+import { useRouter } from 'src/locales/navigation';
 
 // import { [] } from 'src/_mock/_product';
 

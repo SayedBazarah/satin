@@ -1,5 +1,6 @@
 import React from 'react';
 import { m as motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 import { Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
@@ -20,8 +21,11 @@ type Props = {
 export default function ProductsScroller({ title, products }: Props) {
   const md = useResponsive('up', 'md');
 
+  const isArabic = usePathname().includes('/ar/');
+  console.log(isArabic);
+
   const carousel = useCarousel({
-    rtl: false,
+    rtl: (isArabic && true) || false,
     rows: 1, // Display only one row
     slidesToShow: (md && 4) || 2,
     autoplay: true,
