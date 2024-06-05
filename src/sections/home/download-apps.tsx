@@ -1,7 +1,9 @@
 'use client';
-import React, { useEffect, useState } from 'react';
 
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+
+import { Grid, Button, Typography } from '@mui/material';
+
 import Image from 'src/components/image';
 
 export default function DownloadTheApp() {
