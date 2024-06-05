@@ -11,6 +11,7 @@ import ContactForm from 'src/layouts/common/contact-form';
 
 import BriefBox from '../brief-box';
 import Categories from '../categories-row';
+import DownloadTheApp from '../download-apps';
 import ProductsScroller from '../products-scroller';
 import HeroTextOverImage from '../hero-text-over-image';
 
@@ -51,6 +52,7 @@ export default function HomeView() {
           <ProductsScroller products={newProduct} title={t('new-products')} />
           <ProductsScroller products={bestSelling} title={t('best-selling')} />
           <ContactForm />
+          <DownloadTheApp />
         </Stack>
       </Container>
     </MainLayout>

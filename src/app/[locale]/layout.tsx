@@ -53,6 +53,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
 
   return (
     <html lang={locale} className={primaryFont.className}>
+      <head />
       <body>
         <AuthProvider>
           <NextIntlClientProvider messages={messages}>
