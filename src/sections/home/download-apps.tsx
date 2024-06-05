@@ -1,31 +1,35 @@
 'use client';
+import React, { useEffect, useState } from 'react';
 
-import React, { useState, useEffect } from 'react';
-
-import { Grid, Button, Typography } from '@mui/material';
-
+import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import Image from 'src/components/image';
 
 export default function DownloadTheApp() {
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('first');
       e.preventDefault();
       setDeferredPrompt(e);
     });
 
     window.addEventListener('appinstalled', () => {
-      console.log('first');
       console.log('PWA was installed');
       setDeferredPrompt(null);
     });
   }, []);
 
   const onInstallClick = async () => {
-    console.log('deferredPrompt');
-    console.log(deferredPrompt);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('User accepted the install prompt');
+      } else {
+        console.log('User dismissed the install prompt');
+      }
+      setDeferredPrompt(null);
+    }
   };
   return (
     <Grid
