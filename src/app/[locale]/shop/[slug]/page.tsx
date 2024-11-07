@@ -1,18 +1,17 @@
-// ----------------------------------------------------------------------
-
 import { unstable_setRequestLocale } from 'next-intl/server';
-
 import axios, { endpoints } from 'src/utils/axios';
-
 import { ShopProductDetailsView } from 'src/sections/shop/view';
 
-export default function Page({ params }: { params: { slug: string; locale: string } }) {
-  unstable_setRequestLocale(params.locale);
-  return <ShopProductDetailsView slug={params.slug} />;
+interface PageProps {
+  params: {
+    slug: string;
+    locale: string;
+  };
 }
 
-export async function generateStaticParams() {
-  const res = await axios.get(endpoints.product.slugs);
+export default function Page({ params }: PageProps) {
+  // Set the locale for the request
+  unstable_setRequestLocale(params.locale);
 
-  return res.data.slugs;
+  return <ShopProductDetailsView slug={params.slug} />;
 }
